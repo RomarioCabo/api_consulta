@@ -1,4 +1,4 @@
-package romario.cabo.com.br.consulta_api.contrller;
+package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
