@@ -2,6 +2,7 @@ package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
@@ -21,6 +22,9 @@ public class UserController {
 
     private final UserService userService;
 
+    @Value("${application.url}")
+    private String url;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -31,8 +35,8 @@ public class UserController {
         UserDto userDto = (userService.save(form, null));
 
         URI uri = Utils.getUri(
-                "http://192.168.1.4:3400/api/v1/user",
-                "userId={userId}",
+                url+"api/v1/user",
+                "id={id}",
                 userDto.getId()
         );
 

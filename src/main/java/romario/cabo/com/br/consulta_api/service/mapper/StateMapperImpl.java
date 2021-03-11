@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
+import romario.cabo.com.br.consulta_api.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,7 @@ public class StateMapperImpl implements StateMapper{
         stateDto.setId(state.getId());
         stateDto.setName(state.getName());
         stateDto.setAcronym(state.getAcronym());
+        stateDto.setImageBase64(Utils.getImageWithMediaType(state.getId(), state.getImage()));
 
         return stateDto;
     }

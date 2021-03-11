@@ -29,6 +29,9 @@ public class State implements Serializable {
     @Column(name = "sigla", nullable = false, length = 2, unique = true)
     private String acronym;
 
+    @Column(name = "imagem")
+    private String image;
+
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<City> cities = new ArrayList<>();
 }
