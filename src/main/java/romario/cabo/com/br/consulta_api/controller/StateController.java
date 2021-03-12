@@ -56,8 +56,8 @@ public class StateController {
     }
 
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um estado", response = StateDto.class)
-    @PutMapping("/update/{idState}")
-    public ResponseEntity<StateDto> updateState(@PathVariable Long idState,
+    @PutMapping("/update")
+    public ResponseEntity<StateDto> updateState(@RequestParam Long idState,
                                                 @ModelAttribute StateForm form,
                                                 @RequestParam(value = "file", required = false) MultipartFile multipartFile) {
 
@@ -65,9 +65,9 @@ public class StateController {
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um estado")
-    @DeleteMapping("/delete/{idState}")
-    public ResponseEntity<Void> deleteState(@PathVariable Long idState) {
-        stateService.delete(idState);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteState(@PathVariable Long id) {
+        stateService.delete(id);
 
         return ResponseEntity.ok().build();
     }
@@ -79,12 +79,12 @@ public class StateController {
         return ResponseEntity.ok(stateService.findAll(filters));
     }
 
-    @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem")
+    @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem", produces = "image/jpeg, image/gif, image/png")
     @GetMapping(
             value = "/getImage/{id}",
             produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE}
     )
-    public ResponseEntity<byte[]> getImageWithMediaType(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<byte[]> getImageWithMediaType(@PathVariable Long id) {
 
         return ResponseEntity.ok(stateService.getImage(id));
     }

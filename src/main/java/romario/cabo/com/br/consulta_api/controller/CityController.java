@@ -60,7 +60,7 @@ public class CityController {
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar uma cidade")
-    @PutMapping("/delete/{idCity}")
+    @DeleteMapping("/delete/{idCity}")
     public ResponseEntity<Void> deleteCity(@PathVariable Long idCity) {
         cityService.delete(idCity);
 
