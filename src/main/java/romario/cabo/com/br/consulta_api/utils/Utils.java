@@ -56,7 +56,7 @@ public class Utils {
                 return null;
             }
         } catch (Exception e) {
-            throw new NotFoundException("Imagem não encontrada");
+            return null;
         }
     }
 }

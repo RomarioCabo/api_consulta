@@ -79,7 +79,7 @@ public class StateController {
         return ResponseEntity.ok(stateService.findAll(filters));
     }
 
-    @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem", produces = "image/jpeg, image/gif, image/png")
+    @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem")
     @GetMapping(
             value = "/getImage/{id}",
             produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE}

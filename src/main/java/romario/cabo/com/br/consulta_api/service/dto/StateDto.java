@@ -11,5 +11,6 @@ public class StateDto implements Serializable {
     private Long id;
     private String name;
     private String acronym;
-    private byte[] imageBase64;
+    //private byte[] imageBase64;
+    private String urlImage;
 }

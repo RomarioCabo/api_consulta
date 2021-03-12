@@ -14,6 +14,7 @@ import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.utils.Utils;
 
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -65,7 +66,7 @@ public class StateService implements Crud<StateDto, StateForm, StateFilter> {
 
         State state;
 
-        String fileName = file != null ? StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())).replace(" ", "_") : null;
+        String fileName = getFileName(file);
 
         try {
             state = stateRepository.save(getState(form, id, fileName));
@@ -163,6 +164,18 @@ public class StateService implements Crud<StateDto, StateForm, StateFilter> {
             Utils.deleteFile(uploadDir);
         } catch (Exception e) {
             throw new BadRequestException("Não foi possível deletar a imagem do disco!");
+        }
+    }
+
+    private String getFileName(MultipartFile file) {
+        if (file == null) {
+            return null;
+        } else {
+            String rawString = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+
+            byte[] bytes = rawString.getBytes(StandardCharsets.UTF_8);
+
+            return new String(bytes, StandardCharsets.UTF_8);
         }
     }
 }

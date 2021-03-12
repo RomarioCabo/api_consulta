@@ -4,13 +4,12 @@ import org.springframework.stereotype.Component;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
-import romario.cabo.com.br.consulta_api.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StateMapperImpl implements StateMapper{
+public class StateMapperImpl implements StateMapper {
 
     @Override
     public State toEntity(StateForm form) {
@@ -77,8 +76,12 @@ public class StateMapperImpl implements StateMapper{
         stateDto.setId(state.getId());
         stateDto.setName(state.getName());
         stateDto.setAcronym(state.getAcronym());
-        stateDto.setImageBase64(Utils.getImageWithMediaType(state.getId(), state.getImage()));
+        stateDto.setUrlImage(getUrl(state.getImage(), state.getId()));
 
         return stateDto;
+    }
+
+    private String getUrl(String nameImage, Long id) {
+        return nameImage == null ? null : "http://192.168.0.170:3400/api/v1/state/getImage/" + id;
     }
 }
