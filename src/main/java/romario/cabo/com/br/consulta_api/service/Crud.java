@@ -19,4 +19,10 @@ public interface Crud<DTO, FORM, FILTER> {
     default DTO save(FORM object, Long id, MultipartFile file) {
         return null;
     }
+
+    default DTO save(FORM object) {
+        return null;
+    }
+
+    default DTO update(FORM object, Long id){return null;}
 }

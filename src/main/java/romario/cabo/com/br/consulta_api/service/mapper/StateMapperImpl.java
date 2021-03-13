@@ -1,5 +1,6 @@
 package romario.cabo.com.br.consulta_api.service.mapper;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @Component
 public class StateMapperImpl implements StateMapper {
+
+    @Value("${application.url.image}")
+    private String urlImage;
 
     @Override
     public State toEntity(StateForm form) {
@@ -82,6 +86,6 @@ public class StateMapperImpl implements StateMapper {
     }
 
     private String getUrl(String nameImage, Long id) {
-        return nameImage == null ? null : "http://192.168.0.170:3400/api/v1/state/getImage/" + id;
+        return nameImage == null ? null : urlImage + id;
     }
 }
