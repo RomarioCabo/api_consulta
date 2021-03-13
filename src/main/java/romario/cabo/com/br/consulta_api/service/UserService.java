@@ -60,6 +60,11 @@ public class UserService implements Crud<UserDto, UserForm, UserFilter> {
         }
 
         if (form.getEmail() != null) {
+
+            if (userRepository.existsByEmail(form.getEmail())) {
+                throw new BadRequestException("E-Mail ja cadastrado!");
+            }
+
             user.setEmail(form.getEmail());
         }
 
