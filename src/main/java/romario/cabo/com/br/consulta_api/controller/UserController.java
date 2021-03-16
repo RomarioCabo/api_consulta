@@ -32,7 +32,8 @@ public class UserController {
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um usuário", response = UserDto.class)
     @PostMapping("/save")
     public ResponseEntity<UserDto> saveUser(@RequestBody UserForm form) {
-        UserDto userDto = (userService.save(form));
+
+        UserDto userDto = (userService.save(form, null));
 
         URI uri = Utils.getUri(
                 url+"api/v1/user",

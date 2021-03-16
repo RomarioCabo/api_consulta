@@ -27,11 +27,6 @@ public class UserService implements Crud<UserDto, UserForm, UserFilter> {
 
     @Override
     public UserDto save(UserForm form, Long id) {
-        return null;
-    }
-
-    @Override
-    public UserDto save(UserForm form) {
         if (userRepository.existsByEmail(form.getEmail())) {
             throw new BadRequestException("E-Mail ja cadastrado!");
         }

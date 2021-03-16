@@ -13,4 +13,9 @@ public interface Crud<DTO, FORM, FILTER> {
     default List<DTO> saveAll(List<FORM> forms) {
         return null;
     }
+
+    default DTO update(FORM object, Long id) {
+        return null;
+    }
+
 }
