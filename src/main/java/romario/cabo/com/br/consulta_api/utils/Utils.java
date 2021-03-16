@@ -5,7 +5,6 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import romario.cabo.com.br.consulta_api.exception.NotFoundException;
 
 import java.net.URI;
 

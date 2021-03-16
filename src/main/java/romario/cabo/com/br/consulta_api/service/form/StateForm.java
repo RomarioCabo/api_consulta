@@ -10,4 +10,5 @@ public class StateForm implements Serializable {
 
     private String name;
     private String acronym;
+    private String fileInBase64;
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
 import romario.cabo.com.br.consulta_api.service.StateService;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
@@ -41,10 +40,9 @@ public class StateController {
 
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um estado", response = StateDto.class)
     @PostMapping("/save")
-    public ResponseEntity<StateDto> saveStateWithImage(@ModelAttribute StateForm form,
-                                                       @RequestParam(value = "file", required = false) MultipartFile multipartFile) {
+    public ResponseEntity<StateDto> saveStateWithImage(@RequestBody StateForm form) {
 
-        StateDto stateDto = stateService.save(form, null, multipartFile);
+        StateDto stateDto = stateService.save(form, null);
 
         URI uri = Utils.getUri(
                 url + "api/v1/state",
@@ -58,10 +56,9 @@ public class StateController {
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um estado", response = StateDto.class)
     @PutMapping("/update")
     public ResponseEntity<StateDto> updateState(@RequestParam Long idState,
-                                                @ModelAttribute StateForm form,
-                                                @RequestParam(value = "file", required = false) MultipartFile multipartFile) {
+                                                @RequestBody StateForm form) {
 
-        return ResponseEntity.ok(stateService.save(form, idState, multipartFile));
+        return ResponseEntity.ok(stateService.save(form, idState));
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um estado")
