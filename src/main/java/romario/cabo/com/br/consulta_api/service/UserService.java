@@ -27,6 +27,11 @@ public class UserService implements Crud<UserDto, UserForm, UserFilter> {
 
     @Override
     public UserDto save(UserForm form, Long id) {
+        return null;
+    }
+
+    @Override
+    public UserDto save(UserForm form) {
         if (userRepository.existsByEmail(form.getEmail())) {
             throw new BadRequestException("E-Mail ja cadastrado!");
         }
@@ -34,9 +39,41 @@ public class UserService implements Crud<UserDto, UserForm, UserFilter> {
         User user;
 
         try {
-            user = userRepository.save(getUser(form, id));
+            user = userRepository.save(getUser(form));
         } catch (Exception e) {
             throw new BadRequestException("Não foi possível salvar!");
+        }
+
+        try {
+            return userMapper.toDto(user);
+        } catch (Exception e) {
+            throw new BadRequestException("Não foi possível realizar o Mapper para DTO!");
+        }
+    }
+
+    @Override
+    public UserDto update(UserForm form, Long id) {
+        User user = userRepository.findUser(id);
+
+        if (user == null) {
+            throw new BadRequestException("Usuário não localizado em nossa base de dados!");
+        }
+
+        if (form.getEmail() != null) {
+
+            if (userRepository.existsByEmail(form.getEmail())) {
+                throw new BadRequestException("E-Mail ja cadastrado!");
+            }
+
+            user.setEmail(form.getEmail());
+        }
+
+        if (form.getPassword() != null) {
+            user.setPassword(encryptPassword(form.getPassword()));
+        }
+
+        if (form.getName() != null) {
+            user.setName(form.getName());
         }
 
         try {
@@ -60,15 +97,11 @@ public class UserService implements Crud<UserDto, UserForm, UserFilter> {
         return userRepository.filterUser(filter);
     }
 
-    private User getUser(UserForm form, Long id) {
+    private User getUser(UserForm form) {
         try {
             User user;
             user = userMapper.toEntity(form);
             user.setPassword(encryptPassword(user.getPassword()));
-
-            if (id != null) {
-                user.setId(id);
-            }
 
             return user;
         } catch (Exception e) {

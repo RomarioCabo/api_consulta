@@ -32,7 +32,7 @@ public class UserController {
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um usuário", response = UserDto.class)
     @PostMapping("/save")
     public ResponseEntity<UserDto> saveUser(@RequestBody UserForm form) {
-        UserDto userDto = (userService.save(form, null));
+        UserDto userDto = (userService.save(form));
 
         URI uri = Utils.getUri(
                 url+"api/v1/user",
@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<UserDto> updateUser(@PathVariable Long idUser,
                                               @RequestBody UserForm form) {
 
-        return ResponseEntity.ok(userService.save(form, idUser));
+        return ResponseEntity.ok(userService.update(form, idUser));
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um usuário")
