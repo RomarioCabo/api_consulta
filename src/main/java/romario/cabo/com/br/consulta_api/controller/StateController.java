@@ -30,14 +30,6 @@ public class StateController {
         this.stateService = stateService;
     }
 
-    @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar vários estados", response = StateDto[].class)
-    @PostMapping("/saveAll")
-    public ResponseEntity<List<StateDto>> saveAllStates(@RequestBody List<StateForm> forms) {
-
-        return ResponseEntity.ok(stateService.saveAll(forms));
-
-    }
-
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um estado", response = StateDto.class)
     @PostMapping("/save")
     public ResponseEntity<StateDto> saveStateWithImage(@RequestBody StateForm form) {

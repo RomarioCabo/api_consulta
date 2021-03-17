@@ -36,23 +36,6 @@ public class StateService implements Crud<StateDto, StateForm, StateFilter> {
     }
 
     @Override
-    public List<StateDto> saveAll(List<StateForm> forms) {
-        List<State> states;
-
-        try {
-            states = stateRepository.saveAll(getStates(forms));
-        } catch (Exception e) {
-            throw new BadRequestException("Não foi possível salvar!");
-        }
-
-        try {
-            return stateMapper.toDto(states);
-        } catch (Exception e) {
-            throw new BadRequestException("Não foi possível realizar o Mapper para DTO!");
-        }
-    }
-
-    @Override
     public StateDto save(StateForm form, Long id) {
         if (id == null) {
             if (stateRepository.existsByAcronymAndName(form.getAcronym(), form.getName())) {
@@ -130,18 +113,6 @@ public class StateService implements Crud<StateDto, StateForm, StateFilter> {
             }
 
             return state;
-        } catch (Exception e) {
-            throw new BadRequestException("Não foi possível realizar o Mapper para entidade!");
-        }
-    }
-
-    private List<State> getStates(List<StateForm> forms) {
-        try {
-            List<State> states;
-
-            states = stateMapper.toEntity(forms);
-
-            return states;
         } catch (Exception e) {
             throw new BadRequestException("Não foi possível realizar o Mapper para entidade!");
         }
