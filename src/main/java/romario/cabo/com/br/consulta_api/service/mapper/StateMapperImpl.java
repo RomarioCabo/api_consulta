@@ -62,6 +62,19 @@ public class StateMapperImpl implements StateMapper {
         state.setId(dto.getId());
         state.setName(dto.getName());
         state.setAcronym(dto.getAcronym());
+        state.setCapital(dto.getCapital());
+        state.setGentle(dto.getGentle());
+        state.setTerritorialArea(dto.getTerritorialArea());
+        state.setTotalCounties(dto.getTotalCounties());
+        state.setTotalPopulation(dto.getTotalPopulation());
+        state.setDemographicDensity(dto.getDemographicDensity());
+        state.setIdh(dto.getIdh());
+        state.setBorderingTerritory(dto.getBorderingTerritory());
+        state.setPib(dto.getPib());
+        state.setNaturalAspects(dto.getNaturalAspects());
+        state.setEconomicActivities(dto.getEconomicActivities());
+        state.setCuriosity(dto.getCuriosity());
+        state.setRegion(dto.getRegion());
 
         return state;
     }
@@ -71,6 +84,19 @@ public class StateMapperImpl implements StateMapper {
         state.setId(null);
         state.setName(form.getName());
         state.setAcronym(form.getAcronym());
+        state.setCapital(form.getCapital());
+        state.setGentle(form.getGentle());
+        state.setTerritorialArea(form.getTerritorialArea());
+        state.setTotalCounties(form.getTotalCounties());
+        state.setTotalPopulation(form.getTotalPopulation());
+        state.setDemographicDensity(form.getDemographicDensity());
+        state.setIdh(form.getIdh());
+        state.setBorderingTerritory(form.getBorderingTerritory());
+        state.setPib(form.getPib());
+        state.setNaturalAspects(form.getNaturalAspects());
+        state.setEconomicActivities(form.getEconomicActivities());
+        state.setCuriosity(form.getCuriosity());
+        state.setRegion(form.getRegion());
 
         return state;
     }
@@ -81,6 +107,19 @@ public class StateMapperImpl implements StateMapper {
         stateDto.setName(state.getName());
         stateDto.setAcronym(state.getAcronym());
         stateDto.setUrlImage(getUrl(state.getImage(), state.getId()));
+        stateDto.setCapital(state.getCapital());
+        stateDto.setGentle(state.getGentle());
+        stateDto.setTerritorialArea(state.getTerritorialArea());
+        stateDto.setTotalCounties(state.getTotalCounties());
+        stateDto.setTotalPopulation(state.getTotalPopulation());
+        stateDto.setDemographicDensity(state.getDemographicDensity());
+        stateDto.setIdh(state.getIdh());
+        stateDto.setBorderingTerritory(state.getBorderingTerritory());
+        stateDto.setPib(state.getPib());
+        stateDto.setNaturalAspects(state.getNaturalAspects());
+        stateDto.setEconomicActivities(state.getEconomicActivities());
+        stateDto.setCuriosity(state.getCuriosity());
+        stateDto.setRegion(state.getRegion());
 
         return stateDto;
     }
