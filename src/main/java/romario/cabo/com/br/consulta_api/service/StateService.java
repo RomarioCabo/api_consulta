@@ -11,6 +11,7 @@ import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 import romario.cabo.com.br.consulta_api.model.State;
+import romario.cabo.com.br.consulta_api.utils.BASE64DecodedMultipartFile;
 import romario.cabo.com.br.consulta_api.utils.Utils;
 
 import javax.transaction.Transactional;
@@ -35,34 +36,14 @@ public class StateService implements Crud<StateDto, StateForm, StateFilter> {
     }
 
     @Override
-    public List<StateDto> saveAll(List<StateForm> forms) {
-        List<State> states;
-
-        try {
-            states = stateRepository.saveAll(getStates(forms));
-        } catch (Exception e) {
-            throw new BadRequestException("Não foi possível salvar!");
-        }
-
-        try {
-            return stateMapper.toDto(states);
-        } catch (Exception e) {
-            throw new BadRequestException("Não foi possível realizar o Mapper para DTO!");
-        }
-    }
-
-    @Override
     public StateDto save(StateForm form, Long id) {
-        return null;
-    }
-
-    @Override
-    public StateDto save(StateForm form, Long id, MultipartFile file) {
         if (id == null) {
             if (stateRepository.existsByAcronymAndName(form.getAcronym(), form.getName())) {
                 throw new BadRequestException("Estado ja cadastrado!");
             }
         }
+
+        MultipartFile file = BASE64DecodedMultipartFile.base64ToMultipart(form.getFileInBase64());
 
         State state;
 
@@ -132,18 +113,6 @@ public class StateService implements Crud<StateDto, StateForm, StateFilter> {
             }
 
             return state;
-        } catch (Exception e) {
-            throw new BadRequestException("Não foi possível realizar o Mapper para entidade!");
-        }
-    }
-
-    private List<State> getStates(List<StateForm> forms) {
-        try {
-            List<State> states;
-
-            states = stateMapper.toEntity(forms);
-
-            return states;
         } catch (Exception e) {
             throw new BadRequestException("Não foi possível realizar o Mapper para entidade!");
         }

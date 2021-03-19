@@ -12,4 +12,17 @@ public class StateDto implements Serializable {
     private String name;
     private String acronym;
     private String urlImage;
+    private String capital;
+    private String gentle;
+    private int territorialArea;
+    private int totalCounties;
+    private int totalPopulation;
+    private double demographicDensity;
+    private double idh;
+    private String borderingTerritory;
+    private double pib;
+    private String naturalAspects;
+    private String economicActivities;
+    private String curiosity;
+    private String region;
 }

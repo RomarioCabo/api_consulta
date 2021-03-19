@@ -1,7 +1,5 @@
 package romario.cabo.com.br.consulta_api.service;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 public interface Crud<DTO, FORM, FILTER> {
@@ -16,13 +14,8 @@ public interface Crud<DTO, FORM, FILTER> {
         return null;
     }
 
-    default DTO save(FORM object, Long id, MultipartFile file) {
+    default DTO update(FORM object, Long id) {
         return null;
     }
 
-    default DTO save(FORM object) {
-        return null;
-    }
-
-    default DTO update(FORM object, Long id){return null;}
 }
