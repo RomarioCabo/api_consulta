@@ -32,7 +32,7 @@ public class StateController {
 
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um estado", response = StateDto.class)
     @PostMapping("/save")
-    public ResponseEntity<StateDto> saveStateWithImage(@RequestBody StateForm form) {
+    public ResponseEntity<StateDto> saveState(@RequestBody StateForm form) {
 
         StateDto stateDto = stateServiceImpl.save(form, null);
 

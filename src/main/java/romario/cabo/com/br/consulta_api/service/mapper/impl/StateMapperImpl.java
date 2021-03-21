@@ -107,6 +107,7 @@ public class StateMapperImpl implements StateMapper {
         stateDto.setId(state.getId());
         stateDto.setName(state.getName());
         stateDto.setAcronym(state.getAcronym());
+        stateDto.setImageName(state.getImage());
         stateDto.setUrlImage(getUrl(state.getImage(), state.getId()));
         stateDto.setCapital(state.getCapital());
         stateDto.setGentle(state.getGentle());
