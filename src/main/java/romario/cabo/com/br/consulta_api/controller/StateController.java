@@ -46,8 +46,8 @@ public class StateController {
     }
 
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um estado", response = StateDto.class)
-    @PutMapping("/update")
-    public ResponseEntity<StateDto> updateState(@RequestParam Long idState,
+    @PutMapping("/update/{idState}")
+    public ResponseEntity<StateDto> updateState(@PathVariable Long idState,
                                                 @RequestBody StateForm form) {
 
         return ResponseEntity.ok(stateServiceImpl.save(form, idState));

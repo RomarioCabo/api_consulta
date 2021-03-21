@@ -57,7 +57,7 @@ public class State implements Serializable {
     @Column(name = "territorio_limitrofes", nullable = false)
     private String borderingTerritory;
 
-    @Column(name = "pib", nullable = false, precision = 22)
+    @Column(name = "pib", nullable = false, precision = 24, scale = 2)
     private double pib;
 
     @Lob
