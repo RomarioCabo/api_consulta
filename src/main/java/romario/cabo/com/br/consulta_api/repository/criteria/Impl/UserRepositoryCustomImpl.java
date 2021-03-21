@@ -1,7 +1,8 @@
-package romario.cabo.com.br.consulta_api.repository.criteria;
+package romario.cabo.com.br.consulta_api.repository.criteria.Impl;
 
 import lombok.RequiredArgsConstructor;
 import romario.cabo.com.br.consulta_api.model.User_;
+import romario.cabo.com.br.consulta_api.repository.criteria.UserRepositoryCustom;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
 import romario.cabo.com.br.consulta_api.model.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;

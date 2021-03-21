@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
-import romario.cabo.com.br.consulta_api.service.CityService;
+import romario.cabo.com.br.consulta_api.service.impl.CityServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
 import romario.cabo.com.br.consulta_api.utils.Utils;
@@ -20,26 +20,26 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/city")
 public class CityController {
 
-    private final CityService cityService;
+    private final CityServiceImpl cityServiceImpl;
 
     @Value("${application.url}")
     private String url;
 
-    public CityController(CityService cityService) {
-        this.cityService = cityService;
+    public CityController(CityServiceImpl cityServiceImpl) {
+        this.cityServiceImpl = cityServiceImpl;
     }
 
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar várias cidades", response = CityDto[].class)
     @PostMapping("/saveAll")
     public ResponseEntity<List<CityDto>> saveAllCities(@RequestBody List<CityForm> forms) {
 
-        return ResponseEntity.ok(cityService.saveAll(forms));
+        return ResponseEntity.ok(cityServiceImpl.saveAll(forms));
     }
 
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar uma cidade", response = CityDto.class)
     @PostMapping("/save")
     public ResponseEntity<CityDto> saveCity(@RequestBody CityForm form) {
-        CityDto cityDto = cityService.save(form, null);
+        CityDto cityDto = cityServiceImpl.save(form, null);
 
         URI uri = Utils.getUri(
                 url+"api/v1/city",
@@ -56,13 +56,13 @@ public class CityController {
     public ResponseEntity<CityDto> updateCity(@PathVariable Long idCity,
                                               @RequestBody CityForm form) {
 
-        return ResponseEntity.ok(cityService.save(form, idCity));
+        return ResponseEntity.ok(cityServiceImpl.save(form, idCity));
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar uma cidade")
     @DeleteMapping("/delete/{idCity}")
     public ResponseEntity<Void> deleteCity(@PathVariable Long idCity) {
-        cityService.delete(idCity);
+        cityServiceImpl.delete(idCity);
 
         return ResponseEntity.ok().build();
     }
@@ -71,6 +71,6 @@ public class CityController {
     @GetMapping
     public ResponseEntity<List<CityDto>> findCities(@ModelAttribute CityFilter filters) {
 
-        return ResponseEntity.ok(cityService.findAll(filters));
+        return ResponseEntity.ok(cityServiceImpl.findAll(filters));
     }
 }

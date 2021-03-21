@@ -35,7 +35,7 @@ public class State implements Serializable {
     @Column(name = "capital", nullable = false, length = 100)
     private String capital;
 
-    @Column(name = "gentilico", nullable = false, length = 45)
+    @Column(name = "gentilico", nullable = false)
     private String gentle;
 
     @Column(name = "area_territorial", nullable = false)

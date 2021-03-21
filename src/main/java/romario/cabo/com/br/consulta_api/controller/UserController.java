@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
 import romario.cabo.com.br.consulta_api.utils.Utils;
-import romario.cabo.com.br.consulta_api.service.UserService;
+import romario.cabo.com.br.consulta_api.service.impl.UserServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 
@@ -20,20 +20,20 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/user")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @Value("${application.url}")
     private String url;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um usuário", response = UserDto.class)
     @PostMapping("/save")
     public ResponseEntity<UserDto> saveUser(@RequestBody UserForm form) {
 
-        UserDto userDto = (userService.save(form, null));
+        UserDto userDto = (userServiceImpl.save(form, null));
 
         URI uri = Utils.getUri(
                 url+"api/v1/user",
@@ -49,13 +49,13 @@ public class UserController {
     public ResponseEntity<UserDto> updateUser(@PathVariable Long idUser,
                                               @RequestBody UserForm form) {
 
-        return ResponseEntity.ok(userService.update(form, idUser));
+        return ResponseEntity.ok(userServiceImpl.update(form, idUser));
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um usuário")
     @DeleteMapping("/delete/{idUser}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long idUser) {
-        userService.delete(idUser);
+        userServiceImpl.delete(idUser);
 
         return ResponseEntity.ok().build();
     }
@@ -64,6 +64,6 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDto>> findUser(@ModelAttribute UserFilter filter) {
 
-        return ResponseEntity.ok(userService.findAll(filter));
+        return ResponseEntity.ok(userServiceImpl.findAll(filter));
     }
 }

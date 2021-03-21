@@ -1,9 +1,10 @@
-package romario.cabo.com.br.consulta_api.service;
+package romario.cabo.com.br.consulta_api.service.impl;
 
 import org.springframework.stereotype.Service;
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.repository.CityRepository;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
+import romario.cabo.com.br.consulta_api.service.ServiceInterface;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
 import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
@@ -14,12 +15,12 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CityService implements Crud<CityDto, CityForm, CityFilter>{
+public class CityServiceImpl implements ServiceInterface<CityDto, CityForm, CityFilter> {
 
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
 
-    public CityService(CityRepository cityRepository, CityMapper cityMapper) {
+    public CityServiceImpl(CityRepository cityRepository, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.cityMapper = cityMapper;
     }

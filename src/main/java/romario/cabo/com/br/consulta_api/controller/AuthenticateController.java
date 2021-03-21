@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import romario.cabo.com.br.consulta_api.service.AuthenticateService;
+import romario.cabo.com.br.consulta_api.service.impl.AuthenticateServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.AuthenticateForm;
 
@@ -14,9 +14,9 @@ import romario.cabo.com.br.consulta_api.service.form.AuthenticateForm;
 @RequestMapping(value = "/api/v1/authenticate")
 public class AuthenticateController {
 
-    private final AuthenticateService authService;
+    private final AuthenticateServiceImpl authService;
 
-    public AuthenticateController(AuthenticateService authService) {
+    public AuthenticateController(AuthenticateServiceImpl authService) {
         this.authService = authService;
     }
 

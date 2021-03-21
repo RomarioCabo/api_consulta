@@ -1,9 +1,10 @@
-package romario.cabo.com.br.consulta_api.service.mapper;
+package romario.cabo.com.br.consulta_api.service.mapper.impl;
 
 import org.springframework.stereotype.Component;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 import romario.cabo.com.br.consulta_api.model.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
+import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
 
 import java.util.ArrayList;
 import java.util.List;

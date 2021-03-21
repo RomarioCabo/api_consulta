@@ -1,4 +1,4 @@
-package romario.cabo.com.br.consulta_api.service;
+package romario.cabo.com.br.consulta_api.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.repository.StateRepository;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
+import romario.cabo.com.br.consulta_api.service.ServiceInterface;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
@@ -22,7 +23,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class StateService implements Crud<StateDto, StateForm, StateFilter> {
+public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, StateFilter> {
 
     private final StateRepository stateRepository;
     private final StateMapper stateMapper;
@@ -30,7 +31,7 @@ public class StateService implements Crud<StateDto, StateForm, StateFilter> {
     @Value("${application.image.path}")
     private String folderImages;
 
-    public StateService(StateRepository stateRepository, StateMapper stateMapper) {
+    public StateServiceImpl(StateRepository stateRepository, StateMapper stateMapper) {
         this.stateRepository = stateRepository;
         this.stateMapper = stateMapper;
     }

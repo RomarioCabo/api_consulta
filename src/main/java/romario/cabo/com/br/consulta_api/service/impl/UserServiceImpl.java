@@ -1,10 +1,11 @@
-package romario.cabo.com.br.consulta_api.service;
+package romario.cabo.com.br.consulta_api.service.impl;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
+import romario.cabo.com.br.consulta_api.service.ServiceInterface;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
@@ -15,12 +16,12 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserService implements Crud<UserDto, UserForm, UserFilter> {
+public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, UserFilter> {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }

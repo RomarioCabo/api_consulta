@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
-import romario.cabo.com.br.consulta_api.service.StateService;
+import romario.cabo.com.br.consulta_api.service.impl.StateServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.utils.Utils;
@@ -21,20 +21,20 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/state")
 public class StateController {
 
-    private final StateService stateService;
+    private final StateServiceImpl stateServiceImpl;
 
     @Value("${application.url}")
     private String url;
 
-    public StateController(StateService stateService) {
-        this.stateService = stateService;
+    public StateController(StateServiceImpl stateServiceImpl) {
+        this.stateServiceImpl = stateServiceImpl;
     }
 
     @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um estado", response = StateDto.class)
     @PostMapping("/save")
     public ResponseEntity<StateDto> saveStateWithImage(@RequestBody StateForm form) {
 
-        StateDto stateDto = stateService.save(form, null);
+        StateDto stateDto = stateServiceImpl.save(form, null);
 
         URI uri = Utils.getUri(
                 url + "api/v1/state",
@@ -50,13 +50,13 @@ public class StateController {
     public ResponseEntity<StateDto> updateState(@RequestParam Long idState,
                                                 @RequestBody StateForm form) {
 
-        return ResponseEntity.ok(stateService.save(form, idState));
+        return ResponseEntity.ok(stateServiceImpl.save(form, idState));
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um estado")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteState(@PathVariable Long id) {
-        stateService.delete(id);
+        stateServiceImpl.delete(id);
 
         return ResponseEntity.ok().build();
     }
@@ -65,7 +65,7 @@ public class StateController {
     @GetMapping
     public ResponseEntity<List<StateDto>> findState(@ModelAttribute StateFilter filters) {
 
-        return ResponseEntity.ok(stateService.findAll(filters));
+        return ResponseEntity.ok(stateServiceImpl.findAll(filters));
     }
 
     @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem")
@@ -75,6 +75,6 @@ public class StateController {
     )
     public ResponseEntity<byte[]> getImageWithMediaType(@PathVariable Long id) {
 
-        return ResponseEntity.ok(stateService.getImage(id));
+        return ResponseEntity.ok(stateServiceImpl.getImage(id));
     }
 }

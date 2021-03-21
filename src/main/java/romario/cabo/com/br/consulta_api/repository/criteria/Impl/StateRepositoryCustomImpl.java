@@ -1,7 +1,8 @@
-package romario.cabo.com.br.consulta_api.repository.criteria;
+package romario.cabo.com.br.consulta_api.repository.criteria.Impl;
 
 import lombok.RequiredArgsConstructor;
 import romario.cabo.com.br.consulta_api.model.State_;
+import romario.cabo.com.br.consulta_api.repository.criteria.StateRepositoryCustom;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;

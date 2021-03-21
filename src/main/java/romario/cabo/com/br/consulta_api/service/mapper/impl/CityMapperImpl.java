@@ -1,10 +1,12 @@
-package romario.cabo.com.br.consulta_api.service.mapper;
+package romario.cabo.com.br.consulta_api.service.mapper.impl;
 
 import org.springframework.stereotype.Component;
 import romario.cabo.com.br.consulta_api.model.City;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
+import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
+import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 
 import java.util.ArrayList;
 import java.util.List;
