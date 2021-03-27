@@ -3,29 +3,23 @@ package romario.cabo.com.br.consulta_api.repository;
 import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import romario.cabo.com.br.consulta_api.model.User;
 
 @ExtendWith(SpringExtension.class)
+@SpringBootTest
 @ActiveProfiles("test")
-@DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class UserRepositoryTest {
 
-
-    private final UserRepository userRepository;
-    private final TestEntityManager entityManager;
-
-    public UserRepositoryTest(UserRepository userRepository, TestEntityManager entityManager) {
-        this.userRepository = userRepository;
-        this.entityManager = entityManager;
-    }
+    @Autowired
+    UserRepository userRepository;
 
     /*
     * Teste deve retornar True se o email já existir
@@ -33,8 +27,10 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnTrueIfEmailAlreadyExists() {
         // cenário
+        userRepository.deleteAll();
+
         User user = getUserSave();
-        entityManager.persist(user);
+        userRepository.save(user);
 
         // ação/execução
         boolean result = userRepository.existsByEmail("romariocabo2012@gmail.com");
@@ -49,6 +45,7 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnFalseIfEmailDoesNotExist() {
         // cenário
+        userRepository.deleteAll();
 
         // ação/execução
         boolean result = userRepository.existsByEmail("romariocabo2012@gmail.com");
@@ -63,8 +60,10 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnTrueIfIdExists() {
         // cenário
+        userRepository.deleteAll();
+
         User user = getUserSave();
-        entityManager.persist(user);
+        userRepository.save(user);
 
         // ação/execução
         boolean result = userRepository.existsById(1L);
@@ -79,6 +78,7 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnFalseIfIdDoesNotExist() {
         // cenário
+        userRepository.deleteAll();
 
         // ação/execução
         boolean result = userRepository.existsById(1L);
@@ -93,8 +93,10 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnNotNullIfIdExists() {
         // cenário
+        userRepository.deleteAll();
+
         User user = getUserSave();
-        user = entityManager.persist(user);
+        user = userRepository.save(user);
 
         // ação/execução
         user = userRepository.findUser(user.getId());
@@ -109,6 +111,7 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnNullIfIdDoesNotExists() {
         // cenário
+        userRepository.deleteAll();
 
         // ação/execução
         User user = userRepository.findUser(1L);
@@ -123,8 +126,10 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnNotNullIfEmailExists() {
         // cenário
+        userRepository.deleteAll();
+
         User user = getUserSave();
-        user = entityManager.persist(user);
+        user = userRepository.save(user);
 
         // ação/execução
         user = userRepository.findByEmail(user.getEmail());
@@ -139,6 +144,7 @@ public class UserRepositoryTest {
     @Test
     public void mustReturnNullIfEmailDoesNotExists() {
         // cenário
+        userRepository.deleteAll();
 
         // ação/execução
         User user = userRepository.findByEmail("romariocabo2012@gmail.com");
