@@ -1,17 +1,20 @@
 package romario.cabo.com.br.consulta_api.repository;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import romario.cabo.com.br.consulta_api.model.State;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class StateRepositoryTest {
 
     @Autowired
@@ -32,7 +35,7 @@ public class StateRepositoryTest {
         boolean result = stateRepository.existsByAcronymAndName(state.getAcronym(), state.getName());
 
         // verificação
-        Assertions.assertTrue(result);
+        Assertions.assertThat(result).isTrue();
     }
 
     /*
@@ -47,7 +50,7 @@ public class StateRepositoryTest {
         boolean result = stateRepository.existsByAcronymAndName("CE", "Ceará");
 
         // verificação
-        Assertions.assertFalse(result);
+        Assertions.assertThat(result).isFalse();
     }
 
     /*
@@ -65,7 +68,7 @@ public class StateRepositoryTest {
         boolean result = stateRepository.existsById(state.getId());
 
         // verificação
-        Assertions.assertTrue(result);
+        Assertions.assertThat(result).isTrue();
     }
 
     /*
@@ -80,7 +83,24 @@ public class StateRepositoryTest {
         boolean result = stateRepository.existsById(1L);
 
         // verificação
-        Assertions.assertFalse(result);
+        Assertions.assertThat(result).isFalse();
+    }
+
+    /*
+     * Teste deve salvar um estado
+     * */
+    @Test
+    public void shouldStatePersistInDatabase() {
+        //cenário
+        stateRepository.deleteAll();
+
+        State state = getState();
+
+        //acao
+        State stateSave = stateRepository.save(state);
+
+        // verificacao
+        Assertions.assertThat(stateSave.getId()).isNotNull();
     }
 
     private State getState() {
