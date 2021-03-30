@@ -107,6 +107,23 @@ public class UserServiceTest {
     }
 
     /*
+     * deve lançar uma exceção ao tentar converter de entidade para dto
+     */
+    @Test
+    public void shouldThrowExceptionWhenTryingEntityToDto() {
+        //cenário
+        Mockito.doThrow(new InternalServerErrorException("Não foi possível realizar o Mapper para DTO!")).when(userMapper).toDto(getUser());
+
+        //acao
+        Throwable exception = Assertions.catchThrowable(() -> userMapper.toDto(getUser()));
+
+        //verificacao
+        Assertions.assertThat(exception)
+                .isInstanceOf(InternalServerErrorException.class)
+                .hasMessage("Não foi possível realizar o Mapper para DTO!");
+    }
+
+    /*
      * Não deve salvar um usuário
      */
     @Test
@@ -148,6 +165,16 @@ public class UserServiceTest {
         form.setPassword("123");
 
         return form;
+    }
+
+    private User getUser() {
+        User user = new User();
+        user.setId(1L);
+        user.setName("Romário Corderio Cabó");
+        user.setEmail("romariocabo2012@gmail.com");
+        user.setPassword("123");
+
+        return user;
     }
 
     private User toUser(UserForm form) {
