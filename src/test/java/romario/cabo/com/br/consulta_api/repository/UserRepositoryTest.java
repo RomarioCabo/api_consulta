@@ -22,8 +22,8 @@ public class UserRepositoryTest {
     UserRepository userRepository;
 
     /*
-    * Teste deve retornar True se o email já existir
-    * */
+     * Teste deve retornar True se o email já existir
+     * */
     @Test
     public void mustReturnTrueIfEmailAlreadyExists() {
         // cenário
@@ -63,6 +63,7 @@ public class UserRepositoryTest {
         userRepository.deleteAll();
 
         User user = getUser();
+
         userRepository.save(user);
 
         // ação/execução
@@ -96,6 +97,7 @@ public class UserRepositoryTest {
         userRepository.deleteAll();
 
         User user = getUser();
+
         user = userRepository.save(user);
 
         // ação/execução
@@ -129,6 +131,7 @@ public class UserRepositoryTest {
         userRepository.deleteAll();
 
         User user = getUser();
+
         user = userRepository.save(user);
 
         // ação/execução

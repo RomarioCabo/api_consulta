@@ -62,17 +62,59 @@ public class CityRepositoryTest {
     }
 
     /*
-     * Teste deve retornar True se a sigla e o nome do estado já existirem
+     * Teste deve retornar diferente de nulo se o nome da cidade e o id estado existir
      * */
     @Test
-    public void mustReturnTrueIfIdAlreadyExists() {
+    public void mustReturnNotNullIfNameCityAndStateIdExists() {
         // cenário
         stateRepository.deleteAll();
 
-        State state = stateRepository.save(getState(null));
+        State state = getState(null);
+        state = stateRepository.save(state);
 
         cityRepository.deleteAll();
-        City city = cityRepository.save(getCity(state.getId()));
+
+        City city = getCity(state.getId());
+        cityRepository.save(city);
+
+        // ação/execução
+        city = cityRepository.existsCity("Russas", state.getId());
+
+        // verificação
+        Assertions.assertThat(city).isNotNull();
+    }
+
+    /*
+     * Teste deve retornar e nulo se o nome da cidade e o id estado não existir
+     * */
+    @Test
+    public void mustReturnNotNullIfNameCityAndStateIdDoesNotExists() {
+        // cenário
+        stateRepository.deleteAll();
+        cityRepository.deleteAll();
+
+        // ação/execução
+        City city = cityRepository.existsCity("Russas", 1L);
+
+        // verificação
+        Assertions.assertThat(city).isNull();
+    }
+
+    /*
+     * Teste deve retornar true se o id da cidade existir
+     * */
+    @Test
+    public void mustReturnTrueIfIdExists() {
+        // cenário
+        stateRepository.deleteAll();
+
+        State state = getState(null);
+        stateRepository.save(state);
+
+        cityRepository.deleteAll();
+
+        City city = getCity(state.getId());
+        cityRepository.save(city);
 
         // ação/execução
         boolean result = cityRepository.existsById(city.getId());
@@ -146,4 +188,4 @@ public class CityRepositoryTest {
 
         return state;
     }
- }
+}

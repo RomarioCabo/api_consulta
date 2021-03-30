@@ -86,23 +86,6 @@ public class StateRepositoryTest {
         Assertions.assertThat(result).isFalse();
     }
 
-    /*
-     * Teste deve salvar um estado
-     * */
-    @Test
-    public void shouldStatePersistInDatabase() {
-        //cenário
-        stateRepository.deleteAll();
-
-        State state = getState();
-
-        //acao
-        State stateSave = stateRepository.save(state);
-
-        // verificacao
-        Assertions.assertThat(stateSave.getId()).isNotNull();
-    }
-
     private State getState() {
         State state = new State();
         state.setName("Ceará");
