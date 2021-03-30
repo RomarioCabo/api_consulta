@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
+    @ExceptionHandler(InternalServerErrorException.class)
+    public ResponseEntity InternalServerErrorException(InternalServerErrorException e, HttpServletRequest request) {
+        StandardError err = new StandardError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
+    }
+
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity BadRequestException(BadRequestException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());

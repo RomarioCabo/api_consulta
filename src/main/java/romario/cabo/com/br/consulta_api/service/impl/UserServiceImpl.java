@@ -3,6 +3,7 @@ package romario.cabo.com.br.consulta_api.service.impl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
+import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
 import romario.cabo.com.br.consulta_api.service.ServiceInterface;
@@ -37,13 +38,13 @@ public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, User
         try {
             user = userRepository.save(getUser(form));
         } catch (Exception e) {
-            throw new BadRequestException("Não foi possível salvar!");
+            throw new InternalServerErrorException("Não foi possível salvar!");
         }
 
         try {
             return userMapper.toDto(user);
         } catch (Exception e) {
-            throw new BadRequestException("Não foi possível realizar o Mapper para DTO!");
+            throw new InternalServerErrorException("Não foi possível realizar o Mapper para DTO!");
         }
     }
 
@@ -75,7 +76,7 @@ public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, User
         try {
             return userMapper.toDto(user);
         } catch (Exception e) {
-            throw new BadRequestException("Não foi possível realizar o Mapper para DTO!");
+            throw new InternalServerErrorException("Não foi possível realizar o Mapper para DTO!");
         }
     }
 
@@ -101,7 +102,7 @@ public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, User
 
             return user;
         } catch (Exception e) {
-            throw new BadRequestException("Não foi possível realizar o Mapper para entidade!");
+            throw new InternalServerErrorException("Não foi possível realizar o Mapper para entidade!");
         }
     }
 
