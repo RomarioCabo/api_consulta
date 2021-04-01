@@ -2,6 +2,7 @@ package romario.cabo.com.br.consulta_api.service.impl;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.exception.UnauthorizedException;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
@@ -25,11 +26,10 @@ public class AuthenticateServiceImpl implements AuthenticateInterface {
     @Override
     public UserDto authenticateUser(AuthenticateForm form) {
         if (userRepository.existsByEmail(form.getEmail())) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
             User user = userRepository.findByEmail(form.getEmail());
 
-            if (passwordEncoder.matches(form.getPassword(), user.getPassword())) {
+            if (passwordsMatch(form.getPassword(), user.getPassword())) {
                 return userMapper.toDto(user);
             } else {
                 throw new UnauthorizedException("Usuario não autorizado!");
@@ -37,5 +37,10 @@ public class AuthenticateServiceImpl implements AuthenticateInterface {
         } else {
             throw new BadRequestException("E-Mail informado não encontrado!");
         }
+    }
+
+    public boolean passwordsMatch(String passwordEnteredByUser, String passwordEnteredByBd) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(passwordEnteredByUser, passwordEnteredByBd);
     }
 }
