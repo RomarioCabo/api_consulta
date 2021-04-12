@@ -26,7 +26,7 @@ public class StateRepositoryCustomImpl implements StateRepositoryCustom {
     @Override
     public List<StateDto> filterState(StateFilter state) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(State.class);
+        CriteriaQuery<State> criteriaQuery = criteriaBuilder.createQuery(State.class);
 
         Root<State> root = criteriaQuery.from(State.class);
 
@@ -49,8 +49,6 @@ public class StateRepositoryCustomImpl implements StateRepositoryCustom {
 
         TypedQuery<State> TypedQuery = entityManager.createQuery(criteriaQuery);
 
-        List<StateDto> statesDto = this.stateMapper.toDto(TypedQuery.getResultList());
-
-        return statesDto;
+        return this.stateMapper.toDto(TypedQuery.getResultList());
     }
 }

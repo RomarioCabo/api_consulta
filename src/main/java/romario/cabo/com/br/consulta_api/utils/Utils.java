@@ -2,6 +2,7 @@ package romario.cabo.com.br.consulta_api.utils;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -57,5 +58,10 @@ public class Utils {
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    public static boolean passwordMatch(String passwordEnteredByUser, String passwordEnteredByDB) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(passwordEnteredByUser, passwordEnteredByDB);
     }
 }

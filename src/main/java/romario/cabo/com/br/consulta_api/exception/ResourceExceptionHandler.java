@@ -11,25 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 public class ResourceExceptionHandler {
 
     @ExceptionHandler(InternalServerErrorException.class)
-    public ResponseEntity InternalServerErrorException(InternalServerErrorException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> InternalServerErrorException(InternalServerErrorException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity BadRequestException(BadRequestException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> BadRequestException(BadRequestException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity NotFoundException(NotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> NotFoundException(NotFoundException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity UnauthorizedException(UnauthorizedException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> UnauthorizedException(UnauthorizedException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
     }

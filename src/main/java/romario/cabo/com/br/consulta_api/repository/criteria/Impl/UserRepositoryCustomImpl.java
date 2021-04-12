@@ -26,7 +26,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     @Override
     public List<UserDto> filterUser(UserFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(User.class);
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 
         Root<User> root = criteriaQuery.from(User.class);
 
@@ -45,8 +45,6 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
         TypedQuery<User> TypedQuery = entityManager.createQuery(criteriaQuery);
 
-        List<UserDto> usersDto = this.userMapper.toDto(TypedQuery.getResultList());
-
-        return usersDto;
+        return this.userMapper.toDto(TypedQuery.getResultList());
     }
 }

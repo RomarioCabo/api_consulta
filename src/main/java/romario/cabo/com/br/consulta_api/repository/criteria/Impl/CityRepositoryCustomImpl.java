@@ -27,7 +27,7 @@ public class CityRepositoryCustomImpl implements CityRepositoryCustom {
     @Override
     public List<CityDto> filterCity(CityFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(City.class);
+        CriteriaQuery<City> criteriaQuery = criteriaBuilder.createQuery(City.class);
 
         Root<City> root = criteriaQuery.from(City.class);
 
@@ -58,8 +58,6 @@ public class CityRepositoryCustomImpl implements CityRepositoryCustom {
 
         TypedQuery<City> TypedQuery = entityManager.createQuery(criteriaQuery);
 
-        List<CityDto> citiesDto = this.cityMapper.toDto(TypedQuery.getResultList());
-
-        return citiesDto;
+        return this.cityMapper.toDto(TypedQuery.getResultList());
     }
 }

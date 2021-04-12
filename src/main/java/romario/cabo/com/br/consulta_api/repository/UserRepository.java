@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
 
     @Transactional(readOnly = true)
     User findByEmail(String email);
+
+    @Transactional(readOnly = true)
+    User findByName(String name);
 }
