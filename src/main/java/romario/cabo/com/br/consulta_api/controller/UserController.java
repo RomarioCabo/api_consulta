@@ -1,9 +1,9 @@
 package romario.cabo.com.br.consulta_api.controller;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
 import romario.cabo.com.br.consulta_api.utils.Utils;
@@ -15,7 +15,6 @@ import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@Api(value = "API Consulta")
 @RestController
 @RequestMapping(value = "/api/v1/user")
 public class UserController {
@@ -36,7 +35,7 @@ public class UserController {
         UserDto userDto = (userServiceImpl.save(form, null));
 
         URI uri = Utils.getUri(
-                url+"api/v1/user",
+                url + "api/v1/user",
                 "id={id}",
                 userDto.getId()
         );
@@ -45,6 +44,7 @@ public class UserController {
     }
 
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um usuário", response = UserDto.class)
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/update/{idUser}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long idUser,
                                               @RequestBody UserForm form) {
@@ -53,6 +53,7 @@ public class UserController {
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um usuário")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/delete/{idUser}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long idUser) {
         userServiceImpl.delete(idUser);

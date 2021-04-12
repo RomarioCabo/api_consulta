@@ -1,13 +1,7 @@
 package romario.cabo.com.br.consulta_api.repository.criteria.Impl;
 
-import lombok.RequiredArgsConstructor;
-import romario.cabo.com.br.consulta_api.model.City_;
-import romario.cabo.com.br.consulta_api.model.State_;
-import romario.cabo.com.br.consulta_api.repository.criteria.CityRepositoryCustom;
-import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
-import romario.cabo.com.br.consulta_api.model.City;
-import romario.cabo.com.br.consulta_api.service.dto.CityDto;
-import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -15,8 +9,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import lombok.RequiredArgsConstructor;
+
+import romario.cabo.com.br.consulta_api.model.City;
+import romario.cabo.com.br.consulta_api.model.City_;
+import romario.cabo.com.br.consulta_api.model.State_;
+import romario.cabo.com.br.consulta_api.repository.criteria.CityRepositoryCustom;
+import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
+import romario.cabo.com.br.consulta_api.service.dto.CityDto;
+import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
 
 @RequiredArgsConstructor
 public class CityRepositoryCustomImpl implements CityRepositoryCustom {

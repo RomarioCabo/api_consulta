@@ -1,12 +1,7 @@
 package romario.cabo.com.br.consulta_api.repository.criteria.Impl;
 
-import lombok.RequiredArgsConstructor;
-import romario.cabo.com.br.consulta_api.model.State_;
-import romario.cabo.com.br.consulta_api.repository.criteria.StateRepositoryCustom;
-import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
-import romario.cabo.com.br.consulta_api.model.State;
-import romario.cabo.com.br.consulta_api.service.dto.StateDto;
-import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -14,8 +9,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import lombok.RequiredArgsConstructor;
+
+import romario.cabo.com.br.consulta_api.model.State;
+import romario.cabo.com.br.consulta_api.model.State_;
+import romario.cabo.com.br.consulta_api.repository.criteria.StateRepositoryCustom;
+import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
+import romario.cabo.com.br.consulta_api.service.dto.StateDto;
+import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 
 @RequiredArgsConstructor
 public class StateRepositoryCustomImpl implements StateRepositoryCustom {

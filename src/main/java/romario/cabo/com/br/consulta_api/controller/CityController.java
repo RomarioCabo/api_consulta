@@ -1,9 +1,9 @@
 package romario.cabo.com.br.consulta_api.controller;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
 import romario.cabo.com.br.consulta_api.service.impl.CityServiceImpl;
@@ -15,7 +15,6 @@ import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@Api(value = "API Consulta")
 @RestController
 @RequestMapping(value = "/api/v1/city")
 public class CityController {
@@ -29,9 +28,9 @@ public class CityController {
         this.cityServiceImpl = cityServiceImpl;
     }
 
-    @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar várias cidades", response = CityDto[].class)
-    @PostMapping("/saveAll")
-    public ResponseEntity<List<CityDto>> saveAllCities(@RequestBody List<CityForm> forms) {
+    @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar uma lista de cidades", response = CityDto[].class)
+    @PostMapping("/saveListCities")
+    public ResponseEntity<List<CityDto>> saveListCities(@RequestBody List<CityForm> forms) {
 
         return ResponseEntity.ok(cityServiceImpl.saveAll(forms));
     }
@@ -52,6 +51,7 @@ public class CityController {
     }
 
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar uma cidade", response = CityDto.class)
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/update/{idCity}")
     public ResponseEntity<CityDto> updateCity(@PathVariable Long idCity,
                                               @RequestBody CityForm form) {
@@ -60,6 +60,7 @@ public class CityController {
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar uma cidade")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/delete/{idCity}")
     public ResponseEntity<Void> deleteCity(@PathVariable Long idCity) {
         cityServiceImpl.delete(idCity);

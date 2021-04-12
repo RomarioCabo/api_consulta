@@ -35,7 +35,6 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .pathMapping("/")
-                .apiInfo(ApiInfo.DEFAULT)
                 .forCodeGeneration(true)
                 .genericModelSubstitutes(ResponseEntity.class)
                 .ignoredParameterTypes(Pageable.class)
@@ -50,9 +49,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Consulta")
-                .description("API cde consulta de cidades")
-                .version("1.0.0")
+                .title("Consulta de Estados e Cidades Brasileiras")
+                .description("API para consultar os estados brasileiros e suas respectivas cidades")
+                .version("1.0.1")
                 .build();
     }
 

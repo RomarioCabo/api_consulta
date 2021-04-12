@@ -3,7 +3,7 @@ package romario.cabo.com.br.consulta_api.model.enums;
 public enum ProfileEnum {
 
     ADMIN(1, "ROLE_ADMIN"),
-    CLIENT(2, "ROLE_CLIENTE");
+    CLIENT(2, "ROLE_CLIENT");
 
     private final int cod;
     private final String description;

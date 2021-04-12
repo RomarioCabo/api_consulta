@@ -12,8 +12,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import romario.cabo.com.br.consulta_api.model.User;
 
-import java.util.Optional;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")

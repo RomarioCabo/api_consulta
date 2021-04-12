@@ -1,10 +1,10 @@
 package romario.cabo.com.br.consulta_api.controller;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
 import romario.cabo.com.br.consulta_api.service.impl.StateServiceImpl;
@@ -16,7 +16,6 @@ import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@Api(value = "API Consulta")
 @RestController
 @RequestMapping(value = "/api/v1/state")
 public class StateController {
@@ -46,6 +45,7 @@ public class StateController {
     }
 
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um estado", response = StateDto.class)
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/update/{idState}")
     public ResponseEntity<StateDto> updateState(@PathVariable Long idState,
                                                 @RequestBody StateForm form) {
@@ -54,6 +54,7 @@ public class StateController {
     }
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um estado")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteState(@PathVariable Long id) {
         stateServiceImpl.delete(id);
