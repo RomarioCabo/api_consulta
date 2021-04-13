@@ -2,6 +2,7 @@ package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class CityController {
         CityDto cityDto = cityServiceImpl.save(form, null);
 
         URI uri = Utils.getUri(
-                url+"api/v1/city",
+                url + "api/v1/city",
                 "idCity={idCity}",
                 cityDto.getId()
         );
@@ -68,10 +69,15 @@ public class CityController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas as cidades de acordo com os parêmtros informado", response = CityDto[].class)
+    @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas as cidades de acordo com os parêmtros informados", response = CityDto[].class)
     @GetMapping
-    public ResponseEntity<List<CityDto>> findCities(@ModelAttribute CityFilter filters) {
+    public ResponseEntity<List<CityDto>> findCities(@ModelAttribute CityFilter filters,
+                                                    @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                    @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                    @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
 
-        return ResponseEntity.ok(cityServiceImpl.findAll(filters));
+        Page<CityDto> citiesPage = cityServiceImpl.findAll(filters, page, linesPerPage, sortBy);
+
+        return ResponseEntity.ok().headers(cityServiceImpl.responseHeaders(citiesPage)).body(citiesPage.getContent());
     }
 }

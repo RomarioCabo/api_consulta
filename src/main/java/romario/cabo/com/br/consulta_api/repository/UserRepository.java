@@ -17,12 +17,5 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
     boolean existsById(Long id);
 
     @Transactional(readOnly = true)
-    @Query("SELECT user FROM User user WHERE user.id=:id")
-    User findUser(Long id);
-
-    @Transactional(readOnly = true)
     User findByEmail(String email);
-
-    @Transactional(readOnly = true)
-    User findByName(String name);
 }

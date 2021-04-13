@@ -4,6 +4,7 @@ import romario.cabo.com.br.consulta_api.model.City;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface CityMapper {
@@ -15,4 +16,6 @@ public interface CityMapper {
     CityDto toDto(City city);
 
     List<CityDto> toDto(List<City> cities);
+
+    List<CityDto> tupleToDto(List<Tuple> tuples);
 }

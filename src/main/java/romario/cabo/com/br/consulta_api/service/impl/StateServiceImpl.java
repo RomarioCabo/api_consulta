@@ -1,10 +1,15 @@
 package romario.cabo.com.br.consulta_api.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
+import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
 import romario.cabo.com.br.consulta_api.repository.StateRepository;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
 import romario.cabo.com.br.consulta_api.service.ServiceInterface;
@@ -13,6 +18,7 @@ import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.utils.BASE64DecodedMultipartFile;
+import romario.cabo.com.br.consulta_api.utils.ResponseHeaders;
 import romario.cabo.com.br.consulta_api.utils.Utils;
 
 import javax.transaction.Transactional;
@@ -23,7 +29,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, StateFilter> {
+public class StateServiceImpl extends ResponseHeaders<StateDto> implements ServiceInterface<StateDto, StateForm, StateFilter> {
 
     private final StateRepository stateRepository;
     private final StateMapper stateMapper;
@@ -88,18 +94,27 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
     }
 
     @Override
-    public List<StateDto> findAll(StateFilter filter) {
-        return stateRepository.filterState(filter);
+    public Page<StateDto> findAll(StateFilter filter, Integer page, Integer linesPerPage, String sortBy) {
+        try {
+            Pageable pageable = PageRequest.of(page, linesPerPage, Sort.by(sortBy));
+
+            Page<StateDto> statesPage = stateRepository.filterState(filter, pageable);
+
+            if (statesPage.isEmpty()) {
+                return null;
+            }
+
+            return statesPage;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Não foi possível retornar os dados! \nError: " + e.getMessage());
+        }
     }
 
     public byte[] getImage(Long id) {
-        Optional<State> state = stateRepository.findById(id);
+        State state = stateRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("ID informado não encontrado"));
 
-        if (!state.isPresent()) {
-            throw new BadRequestException("ID informado não encontrado");
-        }
-
-        return Utils.getImageWithMediaType(state.get().getId(), state.get().getImage());
+        return Utils.getImageWithMediaType(state.getId(), state.getImage());
     }
 
     private State getState(StateForm form, Long id, String image) {

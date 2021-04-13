@@ -1,7 +1,14 @@
 package romario.cabo.com.br.consulta_api.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
+
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
+import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
 import romario.cabo.com.br.consulta_api.repository.CityRepository;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
 import romario.cabo.com.br.consulta_api.service.ServiceInterface;
@@ -9,13 +16,14 @@ import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
 import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
 import romario.cabo.com.br.consulta_api.model.City;
+import romario.cabo.com.br.consulta_api.utils.ResponseHeaders;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @Transactional
-public class CityServiceImpl implements ServiceInterface<CityDto, CityForm, CityFilter> {
+public class CityServiceImpl extends ResponseHeaders<CityDto> implements ServiceInterface<CityDto, CityForm, CityFilter> {
 
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
@@ -73,8 +81,20 @@ public class CityServiceImpl implements ServiceInterface<CityDto, CityForm, City
     }
 
     @Override
-    public List<CityDto> findAll(CityFilter filter) {
-        return cityRepository.filterCity(filter);
+    public Page<CityDto> findAll(CityFilter filter, Integer page, Integer linesPerPage, String sortBy) {
+        try {
+            Pageable pageable = PageRequest.of(page, linesPerPage, Sort.by(sortBy));
+
+            Page<CityDto> citiesPage = cityRepository.filterCity(filter, pageable);
+
+            if (citiesPage.isEmpty()) {
+                return null;
+            }
+
+            return citiesPage;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Não foi possível retornar os dados! \nError: " + e.getMessage());
+        }
     }
 
     private List<City> getCities(List<CityForm> forms) {

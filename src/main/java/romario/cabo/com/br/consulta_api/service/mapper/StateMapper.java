@@ -4,6 +4,7 @@ import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface StateMapper {
@@ -20,4 +21,5 @@ public interface StateMapper {
 
     List<StateDto> toDto(List<State> states);
 
+    List<StateDto> tupleToDto(List<Tuple> tuples);
 }

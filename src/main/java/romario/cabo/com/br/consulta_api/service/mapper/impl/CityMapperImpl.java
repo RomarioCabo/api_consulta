@@ -8,6 +8,7 @@ import romario.cabo.com.br.consulta_api.service.form.CityForm;
 import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 
+import javax.persistence.Tuple;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,11 +49,29 @@ public class CityMapperImpl implements CityMapper {
         return citiesDto;
     }
 
+    @Override
+    public List<CityDto> tupleToDto(List<Tuple> tuple) {
+        List<CityDto> citiesDto = new ArrayList<>();
+
+        tuple.forEach(obj -> citiesDto.add(getCity(obj)));
+
+        return citiesDto;
+    }
+
     private CityDto getCity(City city) {
         CityDto cityDto = new CityDto();
         cityDto.setId(city.getId());
         cityDto.setName(city.getName());
         cityDto.setState(stateMapper.toDto(city.getState()));
+
+        return cityDto;
+    }
+
+    private CityDto getCity(Tuple tuple) {
+        CityDto cityDto = new CityDto();
+        cityDto.setId((Long) tuple.get(0));
+        cityDto.setName((String) tuple.get(1));
+        cityDto.setState(stateMapper.toDto((State) tuple.get(2)));
 
         return cityDto;
     }

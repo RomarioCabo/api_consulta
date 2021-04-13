@@ -4,6 +4,7 @@ import romario.cabo.com.br.consulta_api.model.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface UserMapper {
@@ -16,4 +17,5 @@ public interface UserMapper {
 
     List<UserDto> toDto(List<User> users);
 
+    List<UserDto> tupleToDto(List<Tuple> tuples);
 }

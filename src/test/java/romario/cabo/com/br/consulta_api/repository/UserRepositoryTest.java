@@ -92,40 +92,6 @@ public class UserRepositoryTest {
      * Teste deve retornar diferente de nulo se o id existir
      * */
     @Test
-    public void mustReturnNotNullIfIdExists() {
-        // cenário
-        userRepository.deleteAll();
-
-        User user = getUser();
-
-        user = userRepository.save(user);
-
-        // ação/execução
-        user = userRepository.findUser(user.getId());
-
-        // verificação
-        Assertions.assertThat(user).isNotNull();
-    }
-
-    /*
-     * Teste deve retornar nulo se o id existir
-     * */
-    @Test
-    public void mustReturnNullIfIdDoesNotExists() {
-        // cenário
-        userRepository.deleteAll();
-
-        // ação/execução
-        User user = userRepository.findUser(1L);
-
-        // verificação
-        Assertions.assertThat(user).isNull();
-    }
-
-    /*
-     * Teste deve retornar diferente de nulo se o id existir
-     * */
-    @Test
     public void mustReturnNotNullIfEmailExists() {
         // cenário
         userRepository.deleteAll();

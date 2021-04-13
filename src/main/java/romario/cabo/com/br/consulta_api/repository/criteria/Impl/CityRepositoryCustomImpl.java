@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+
 import romario.cabo.com.br.consulta_api.model.City;
 import romario.cabo.com.br.consulta_api.model.City_;
 import romario.cabo.com.br.consulta_api.model.State_;
@@ -17,24 +25,26 @@ import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
 
-
+@RequiredArgsConstructor
 public class CityRepositoryCustomImpl implements CityRepositoryCustom {
 
     private final EntityManager entityManager;
     private final CityMapper cityMapper;
-    
-    
-    CityRepositoryCustomImpl(EntityManager entityManager, CityMapper cityMapper) {
-    	this.entityManager = entityManager;
-    	this.cityMapper = cityMapper;
-    }
-    
+
     @Override
-    public List<CityDto> filterCity(CityFilter filter) {
+    public Page<CityDto> filterCity(CityFilter filter, Pageable pageable) {
+
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<City> criteriaQuery = criteriaBuilder.createQuery(City.class);
+
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
 
         Root<City> root = criteriaQuery.from(City.class);
+
+        criteriaQuery.multiselect(
+                root.get(City_.ID),
+                root.get(City_.NAME),
+                root.get(City_.STATE)
+        );
 
         List<Predicate> predicates = new ArrayList<>();
 
@@ -58,11 +68,18 @@ public class CityRepositoryCustomImpl implements CityRepositoryCustom {
             predicates.add(criteriaBuilder.equal(root.get(City_.STATE).get(State_.ACRONYM), filter.getAcronymState()));
         }
 
-        criteriaQuery.where(predicates.toArray(new Predicate[0]));
-        criteriaQuery.orderBy(criteriaBuilder.asc(root.get(City_.STATE).get(State_.ACRONYM)), criteriaBuilder.asc(root.get(City_.NAME)));
+        if (!predicates.isEmpty()) criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
-        TypedQuery<City> TypedQuery = entityManager.createQuery(criteriaQuery);
+        TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
 
-        return this.cityMapper.toDto(TypedQuery.getResultList());
+        int totalRows = typedQuery.getResultList().size();
+        typedQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        typedQuery.setMaxResults(pageable.getPageSize());
+
+        List<CityDto> cities = cityMapper.tupleToDto(typedQuery.getResultList());
+
+        if (cities.isEmpty()) return null;
+
+        return new PageImpl<>(cities, pageable, totalRows);
     }
 }

@@ -1,5 +1,7 @@
 package romario.cabo.com.br.consulta_api.service;
 
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 public interface ServiceInterface<DTO, FORM, FILTER> {
@@ -8,7 +10,7 @@ public interface ServiceInterface<DTO, FORM, FILTER> {
 
     void delete(Long id);
 
-    List<DTO> findAll(FILTER filter);
+    Page<DTO> findAll(FILTER filter, Integer page, Integer linesPerPage, String sortBy);
 
     default List<DTO> saveAll(List<FORM> forms) {
         return null;

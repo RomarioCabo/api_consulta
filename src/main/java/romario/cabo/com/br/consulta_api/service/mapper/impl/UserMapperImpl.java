@@ -8,6 +8,7 @@ import romario.cabo.com.br.consulta_api.model.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
 
+import javax.persistence.Tuple;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,15 @@ public class UserMapperImpl implements UserMapper {
         return usersDto;
     }
 
+    @Override
+    public List<UserDto> tupleToDto(List<Tuple> tuples) {
+        List<UserDto> usersDto = new ArrayList<>();
+
+        tuples.forEach(obj -> usersDto.add(getUser(obj)));
+
+        return usersDto;
+    }
+
     private User getUser(UserForm form) {
         User user = new User();
         user.setId(null);
@@ -64,6 +74,16 @@ public class UserMapperImpl implements UserMapper {
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
         userDto.setProfile(ProfileEnum.toEnum(profileRepository.findProfileCodeByIdUser(user.getId())));
+
+        return userDto;
+    }
+
+    private UserDto getUser(Tuple tuple) {
+        UserDto userDto = new UserDto();
+        userDto.setId((Long) tuple.get(0));
+        userDto.setName((String) tuple.get(1));
+        userDto.setEmail((String) tuple.get(2));
+        userDto.setProfile(ProfileEnum.toEnum(profileRepository.findProfileCodeByIdUser((Long) tuple.get(0))));
 
         return userDto;
     }

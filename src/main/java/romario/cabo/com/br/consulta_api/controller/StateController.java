@@ -2,6 +2,7 @@ package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,11 +63,16 @@ public class StateController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os estados de acordo com os parêmtros informado", response = StateDto[].class)
+    @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os estados de acordo com os parêmtros informados", response = StateDto[].class)
     @GetMapping
-    public ResponseEntity<List<StateDto>> findState(@ModelAttribute StateFilter filters) {
+    public ResponseEntity<List<StateDto>> findState(@ModelAttribute StateFilter filters,
+                                                    @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                    @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                    @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
 
-        return ResponseEntity.ok(stateServiceImpl.findAll(filters));
+        Page<StateDto> statesPage = stateServiceImpl.findAll(filters, page, linesPerPage, sortBy);
+
+        return ResponseEntity.ok().headers(stateServiceImpl.responseHeaders(statesPage)).body(statesPage.getContent());
     }
 
     @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem")

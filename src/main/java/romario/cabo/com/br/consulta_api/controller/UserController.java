@@ -2,6 +2,7 @@ package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -61,10 +62,15 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os usuários de acordo com os parêmtros informado", response = UserDto[].class)
+    @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os usuários de acordo com os parêmtros informados", response = UserDto[].class)
     @GetMapping
-    public ResponseEntity<List<UserDto>> findUser(@ModelAttribute UserFilter filter) {
+    public ResponseEntity<List<UserDto>> findUser(@ModelAttribute UserFilter filters,
+                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                  @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                  @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
 
-        return ResponseEntity.ok(userServiceImpl.findAll(filter));
+        Page<UserDto> usersPage = userServiceImpl.findAll(filters, page, linesPerPage, sortBy);
+
+        return ResponseEntity.ok().headers(userServiceImpl.responseHeaders(usersPage)).body(usersPage.getContent());
     }
 }

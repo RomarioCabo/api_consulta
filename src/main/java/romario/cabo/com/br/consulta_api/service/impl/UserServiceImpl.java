@@ -1,7 +1,13 @@
 package romario.cabo.com.br.consulta_api.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
+
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
@@ -11,13 +17,13 @@ import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
 import romario.cabo.com.br.consulta_api.model.User;
+import romario.cabo.com.br.consulta_api.utils.ResponseHeaders;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, UserFilter> {
+public class UserServiceImpl extends ResponseHeaders<UserDto> implements ServiceInterface<UserDto, UserForm, UserFilter> {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -50,11 +56,8 @@ public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, User
 
     @Override
     public UserDto update(UserForm form, Long id) {
-        User user = userRepository.findUser(id);
-
-        if (user == null) {
-            throw new BadRequestException("Usuário não localizado em nossa base de dados!");
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Usuário não localizado em nossa base de dados!"));
 
         if (form.getEmail() != null) {
 
@@ -90,8 +93,20 @@ public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, User
     }
 
     @Override
-    public List<UserDto> findAll(UserFilter filter) {
-        return userRepository.filterUser(filter);
+    public Page<UserDto> findAll(UserFilter filter, Integer page, Integer linesPerPage, String sortBy) {
+        try {
+            Pageable pageable = PageRequest.of(page, linesPerPage, Sort.by(sortBy));
+
+            Page<UserDto> usersPage = userRepository.filterUser(filter, pageable);
+
+            if (usersPage.isEmpty()) {
+                return null;
+            }
+
+            return usersPage;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Não foi possível retornar os dados! \nError: " + e.getMessage());
+        }
     }
 
     private User getUser(UserForm form) {

@@ -7,6 +7,7 @@ import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 
+import javax.persistence.Tuple;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,15 @@ public class StateMapperImpl implements StateMapper {
         List<StateDto> statesDto = new ArrayList<>();
 
         states.forEach(obj -> statesDto.add(getState(obj)));
+
+        return statesDto;
+    }
+
+    @Override
+    public List<StateDto> tupleToDto(List<Tuple> tuples) {
+        List<StateDto> statesDto = new ArrayList<>();
+
+        tuples.forEach(obj -> statesDto.add(getState(obj)));
 
         return statesDto;
     }
@@ -122,6 +132,30 @@ public class StateMapperImpl implements StateMapper {
         stateDto.setEconomicActivities(state.getEconomicActivities());
         stateDto.setCuriosity(state.getCuriosity());
         stateDto.setRegion(state.getRegion());
+
+        return stateDto;
+    }
+
+    private StateDto getState(Tuple tuple) {
+        StateDto stateDto = new StateDto();
+        stateDto.setId((Long) tuple.get(0));
+        stateDto.setName((String) tuple.get(1));
+        stateDto.setAcronym((String) tuple.get(2));
+        stateDto.setImageName((String) tuple.get(3));
+        stateDto.setUrlImage(getUrl((String) tuple.get(3), (Long) tuple.get(0)));
+        stateDto.setCapital((String) tuple.get(4));
+        stateDto.setGentle((String) tuple.get(5));
+        stateDto.setTerritorialArea((int) tuple.get(6));
+        stateDto.setTotalCounties((int) tuple.get(7));
+        stateDto.setTotalPopulation((int) tuple.get(8));
+        stateDto.setDemographicDensity((double) tuple.get(9));
+        stateDto.setIdh((double) tuple.get(10));
+        stateDto.setBorderingTerritory((String) tuple.get(11));
+        stateDto.setPib((double) tuple.get(12));
+        stateDto.setNaturalAspects((String) tuple.get(13));
+        stateDto.setEconomicActivities((String) tuple.get(14));
+        stateDto.setCuriosity((String) tuple.get(15));
+        stateDto.setRegion((String) tuple.get(16));
 
         return stateDto;
     }
