@@ -11,7 +11,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import lombok.RequiredArgsConstructor;
-
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.model.State_;
 import romario.cabo.com.br.consulta_api.repository.criteria.StateRepositoryCustom;

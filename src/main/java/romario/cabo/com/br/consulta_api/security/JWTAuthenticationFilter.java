@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -55,6 +57,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = jwtUtil.generateToken(email);
         res.addHeader("Authorization", "Bearer " + token);
         res.addHeader("access-control-expose-headers", "Authorization");
+
+        UserSS user = (UserSS) auth.getPrincipal();
+
+        PrintWriter out = res.getWriter();
+        out.print(userJson(user));
+        out.flush();
     }
 
     private static class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -64,6 +72,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 throws IOException, ServletException {
             response.setStatus(401);
             response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().append(json());
         }
 
@@ -74,6 +83,25 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     + "\"error\": \"Não autorizado\", "
                     + "\"message\": \"Email ou senha inválidos\"}";
         }
+    }
+
+    private String userJson(UserSS user) {
+        return "{"
+                + "\"id\": " + user.getId() + ", "
+                + "\"name\": \"" + stringEncoderToUtf8(user.getUsername()) + "\", "
+                + "\"email\": \"" + user.getEmail() + "\", "
+                + "\"profile\": \"" + formatterAuthorities(user.getAuthorities().toString()) + "\" " +
+                "}";
+    }
+
+    private String stringEncoderToUtf8(String stringToEncoder) {
+        byte[] encodedText = stringToEncoder.getBytes(StandardCharsets.UTF_8);
+        return new String(encodedText, StandardCharsets.ISO_8859_1);
+    }
+
+    private String formatterAuthorities(String authorities) {
+        String[] aux = authorities.split("_");
+        return aux[1].replace("]", "");
     }
 }
 

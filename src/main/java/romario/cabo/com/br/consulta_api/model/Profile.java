@@ -23,6 +23,6 @@ public class Profile implements Serializable {
     @JoinColumn(name = "id_usuario", nullable = false)
     private User user;
 
-    @Column(name = "perfil", nullable = false, length = 11)
-    private int profile;
+    @Column(name = "cod_perfil", nullable = false, length = 11)
+    private int profileCode;
 }

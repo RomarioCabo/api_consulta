@@ -1,6 +1,8 @@
 package romario.cabo.com.br.consulta_api.service.mapper.impl;
 
 import org.springframework.stereotype.Component;
+import romario.cabo.com.br.consulta_api.model.enums.ProfileEnum;
+import romario.cabo.com.br.consulta_api.repository.ProfileRepository;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 import romario.cabo.com.br.consulta_api.model.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
@@ -11,6 +13,12 @@ import java.util.List;
 
 @Component
 public class UserMapperImpl implements UserMapper {
+
+    private final ProfileRepository profileRepository;
+
+    public UserMapperImpl(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
 
     @Override
     public User toEntity(UserForm form) {
@@ -55,6 +63,7 @@ public class UserMapperImpl implements UserMapper {
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
+        userDto.setProfile(ProfileEnum.toEnum(profileRepository.findProfileCodeByIdUser(user.getId())));
 
         return userDto;
     }

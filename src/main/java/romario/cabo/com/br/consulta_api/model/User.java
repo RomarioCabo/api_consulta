@@ -34,18 +34,14 @@ public class User implements Serializable {
     @Column(name = "nome", nullable = false, length = 100, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Profile> profiles = new ArrayList<>();
 
     public Set<ProfileEnum> getProfileCodes() {
         Set<ProfileEnum> profiles = new HashSet<>();
 
-        this.profiles.forEach(obj -> profiles.add(ProfileEnum.toEnum(obj.getProfile())));
+        this.profiles.forEach(obj -> profiles.add(ProfileEnum.toEnum(obj.getProfileCode())));
 
         return profiles;
     }
-
-    /*public void addProfile(Profile profile) {
-        profiles.add(profile.getCod());
-    }*/
 }
