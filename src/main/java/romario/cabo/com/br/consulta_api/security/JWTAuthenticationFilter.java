@@ -61,6 +61,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserSS user = (UserSS) auth.getPrincipal();
 
         PrintWriter out = res.getWriter();
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         out.print(userJson(user));
         out.flush();
     }
@@ -88,15 +90,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private String userJson(UserSS user) {
         return "{"
                 + "\"id\": " + user.getId() + ", "
-                + "\"name\": \"" + stringEncoderToUtf8(user.getUsername()) + "\", "
+                + "\"name\": \"" + user.getUsername() + "\", "
                 + "\"email\": \"" + user.getEmail() + "\", "
                 + "\"profile\": \"" + formatterAuthorities(user.getAuthorities().toString()) + "\" " +
                 "}";
-    }
-
-    private String stringEncoderToUtf8(String stringToEncoder) {
-        byte[] encodedText = stringToEncoder.getBytes(StandardCharsets.UTF_8);
-        return new String(encodedText, StandardCharsets.ISO_8859_1);
     }
 
     private String formatterAuthorities(String authorities) {
