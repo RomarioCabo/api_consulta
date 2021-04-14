@@ -16,7 +16,7 @@ import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
 import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
 import romario.cabo.com.br.consulta_api.model.City;
-import romario.cabo.com.br.consulta_api.utils.ResponseHeaders;
+import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
 
 import javax.transaction.Transactional;
 import java.util.List;

@@ -64,10 +64,10 @@ public class UserController {
 
     @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os usuários de acordo com os parêmtros informados", response = UserDto[].class)
     @GetMapping
-    public ResponseEntity<List<UserDto>> findUser(@ModelAttribute UserFilter filters,
-                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                  @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-                                                  @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
+    public ResponseEntity<List<UserDto>> findUsers(@ModelAttribute UserFilter filters,
+                                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                   @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                   @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
 
         Page<UserDto> usersPage = userServiceImpl.findAll(filters, page, linesPerPage, sortBy);
 

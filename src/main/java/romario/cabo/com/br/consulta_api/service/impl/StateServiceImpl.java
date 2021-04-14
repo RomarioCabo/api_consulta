@@ -18,12 +18,11 @@ import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.utils.BASE64DecodedMultipartFile;
-import romario.cabo.com.br.consulta_api.utils.ResponseHeaders;
+import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
 import romario.cabo.com.br.consulta_api.utils.Utils;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 

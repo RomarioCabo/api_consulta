@@ -65,10 +65,10 @@ public class StateController {
 
     @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os estados de acordo com os parêmtros informados", response = StateDto[].class)
     @GetMapping
-    public ResponseEntity<List<StateDto>> findState(@ModelAttribute StateFilter filters,
-                                                    @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                    @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-                                                    @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
+    public ResponseEntity<List<StateDto>> findStates(@ModelAttribute StateFilter filters,
+                                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                     @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                     @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
 
         Page<StateDto> statesPage = stateServiceImpl.findAll(filters, page, linesPerPage, sortBy);
 

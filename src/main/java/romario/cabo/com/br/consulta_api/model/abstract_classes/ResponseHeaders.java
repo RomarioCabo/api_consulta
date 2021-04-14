@@ -1,9 +1,9 @@
-package romario.cabo.com.br.consulta_api.utils;
+package romario.cabo.com.br.consulta_api.model.abstract_classes;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 
-public class ResponseHeaders<DTO> {
+public abstract class ResponseHeaders<DTO> {
 
     public HttpHeaders responseHeaders(Page<DTO> listPages) {
         if (listPages.isEmpty()) {
