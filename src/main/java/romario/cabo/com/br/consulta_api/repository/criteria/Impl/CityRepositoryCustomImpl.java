@@ -88,12 +88,9 @@ public class CityRepositoryCustomImpl implements CityRepositoryCustom {
     private String getTableName(String sort) {
         String[] sortBy = sort.split(":");
 
-        if(sortBy[0].equals(City_.ID)) {
-            return City_.ID;
-        } else if(sortBy[0].equals(City_.NAME)) {
+        if (City_.NAME.equals(sortBy[0])) {
             return City_.NAME;
-        } else {
-            return City_.ID;
         }
+        return City_.ID;
     }
 }

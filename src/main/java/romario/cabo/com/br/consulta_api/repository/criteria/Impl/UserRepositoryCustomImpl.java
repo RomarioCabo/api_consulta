@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+
 import romario.cabo.com.br.consulta_api.model.User;
 import romario.cabo.com.br.consulta_api.model.User_;
 import romario.cabo.com.br.consulta_api.repository.criteria.UserRepositoryCustom;
@@ -56,6 +57,8 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
         if (!predicates.isEmpty()) criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get(getTableName(pageable.getSort().toString()))));
+
         TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
 
         int totalRows = typedQuery.getResultList().size();
@@ -67,5 +70,18 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
         if(users.isEmpty()) return null;
 
         return new PageImpl<>(users, pageable, totalRows);
+    }
+
+    private String getTableName(String sort) {
+        String[] sortBy = sort.split(":");
+
+        switch (sortBy[0]) {
+            case User_.NAME:
+                return User_.NAME;
+            case User_.EMAIL:
+                return User_.EMAIL;
+            default:
+                return User_.ID;
+        }
     }
 }

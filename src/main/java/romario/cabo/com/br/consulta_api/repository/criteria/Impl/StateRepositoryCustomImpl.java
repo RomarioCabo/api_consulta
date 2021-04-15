@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import romario.cabo.com.br.consulta_api.model.City_;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.model.State_;
+import romario.cabo.com.br.consulta_api.model.User_;
 import romario.cabo.com.br.consulta_api.repository.criteria.StateRepositoryCustom;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
@@ -74,6 +75,8 @@ public class StateRepositoryCustomImpl implements StateRepositoryCustom {
 
         if (!predicates.isEmpty()) criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get(getTableName(pageable.getSort().toString()))));
+
         TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
 
         int totalRows = typedQuery.getResultList().size();
@@ -85,5 +88,46 @@ public class StateRepositoryCustomImpl implements StateRepositoryCustom {
         if(states.isEmpty()) return null;
 
         return new PageImpl<>(states, pageable, totalRows);
+    }
+
+    private String getTableName(String sort) {
+        String[] sortBy = sort.split(":");
+
+        switch (sortBy[0]) {
+            case State_.NAME:
+                return State_.NAME;
+            case State_.ACRONYM:
+                return State_.ACRONYM;
+            case State_.IMAGE:
+                return State_.IMAGE;
+            case State_.CAPITAL:
+                return State_.CAPITAL;
+            case State_.GENTLE:
+                return State_.GENTLE;
+            case State_.TERRITORIAL_AREA:
+                return State_.TERRITORIAL_AREA;
+            case State_.TOTAL_COUNTIES:
+                return State_.TOTAL_COUNTIES;
+            case State_.TOTAL_POPULATION:
+                return State_.TOTAL_POPULATION;
+            case State_.DEMOGRAPHIC_DENSITY:
+                return State_.DEMOGRAPHIC_DENSITY;
+            case State_.IDH:
+                return State_.IDH;
+            case State_.BORDERING_TERRITORY:
+                return State_.BORDERING_TERRITORY;
+            case State_.PIB:
+                return State_.PIB;
+            case State_.NATURAL_ASPECTS:
+                return State_.NATURAL_ASPECTS;
+            case State_.ECONOMIC_ACTIVITIES:
+                return State_.ECONOMIC_ACTIVITIES;
+            case State_.CURIOSITY:
+                return State_.CURIOSITY;
+            case State_.REGION:
+                return State_.REGION;
+            default:
+                return State_.ID;
+        }
     }
 }
