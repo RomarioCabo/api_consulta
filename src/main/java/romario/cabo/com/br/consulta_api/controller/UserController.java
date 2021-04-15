@@ -1,11 +1,17 @@
 package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.data.domain.Page;
+
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
+
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
 import romario.cabo.com.br.consulta_api.utils.Utils;
 import romario.cabo.com.br.consulta_api.service.impl.UserServiceImpl;

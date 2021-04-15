@@ -70,6 +70,8 @@ public class CityRepositoryCustomImpl implements CityRepositoryCustom {
 
         if (!predicates.isEmpty()) criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get(getTableName(pageable.getSort().toString()))));
+
         TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
 
         int totalRows = typedQuery.getResultList().size();
@@ -81,5 +83,17 @@ public class CityRepositoryCustomImpl implements CityRepositoryCustom {
         if (cities.isEmpty()) return null;
 
         return new PageImpl<>(cities, pageable, totalRows);
+    }
+
+    private String getTableName(String sort) {
+        String[] sortBy = sort.split(":");
+
+        if(sortBy[0].equals(City_.ID)) {
+            return City_.ID;
+        } else if(sortBy[0].equals(City_.NAME)) {
+            return City_.NAME;
+        } else {
+            return City_.ID;
+        }
     }
 }
