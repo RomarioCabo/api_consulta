@@ -18,7 +18,6 @@ import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;
 import romario.cabo.com.br.consulta_api.model.State;
 import romario.cabo.com.br.consulta_api.utils.BASE64DecodedMultipartFile;
-import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
 import romario.cabo.com.br.consulta_api.utils.Utils;
 
 import javax.transaction.Transactional;
@@ -28,7 +27,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class StateServiceImpl extends ResponseHeaders<StateDto> implements ServiceInterface<StateDto, StateForm, StateFilter> {
+public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, StateFilter> {
 
     private final StateRepository stateRepository;
     private final StateMapper stateMapper;

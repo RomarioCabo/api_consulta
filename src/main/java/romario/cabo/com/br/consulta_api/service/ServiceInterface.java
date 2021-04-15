@@ -16,7 +16,7 @@ public interface ServiceInterface<DTO, FORM, FILTER> {
         return null;
     }
 
-    default DTO update(FORM object, Long id) {
+    default DTO update(FORM object, Long id, Long idProfile) {
         return null;
     }
 

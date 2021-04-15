@@ -12,24 +12,26 @@ import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
+import romario.cabo.com.br.consulta_api.service.ProfileService;
 import romario.cabo.com.br.consulta_api.service.ServiceInterface;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
 import romario.cabo.com.br.consulta_api.model.User;
-import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
 
 import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class UserServiceImpl extends ResponseHeaders<UserDto> implements ServiceInterface<UserDto, UserForm, UserFilter> {
+public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, UserFilter> {
 
     private final UserRepository userRepository;
+    private final ProfileService profileService;
     private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, ProfileService profileService, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.profileService = profileService;
         this.userMapper = userMapper;
     }
 
@@ -44,8 +46,10 @@ public class UserServiceImpl extends ResponseHeaders<UserDto> implements Service
         try {
             user = userRepository.save(getUser(form));
         } catch (Exception e) {
-            throw new InternalServerErrorException("Não foi possível salvar!");
+            throw new InternalServerErrorException("Não foi possível salvar o usuário!");
         }
+
+        profileService.save(null, user, form.getCodProfile());
 
         try {
             return userMapper.toDto(user);
@@ -55,8 +59,8 @@ public class UserServiceImpl extends ResponseHeaders<UserDto> implements Service
     }
 
     @Override
-    public UserDto update(UserForm form, Long id) {
-        User user = userRepository.findById(id)
+    public UserDto update(UserForm form, Long idUser, Long idProfile) {
+        User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new BadRequestException("Usuário não localizado em nossa base de dados!"));
 
         if (form.getEmail() != null) {
@@ -75,6 +79,8 @@ public class UserServiceImpl extends ResponseHeaders<UserDto> implements Service
         if (form.getName() != null) {
             user.setName(form.getName());
         }
+
+        profileService.save(idProfile, user, form.getCodProfile());
 
         try {
             return userMapper.toDto(user);

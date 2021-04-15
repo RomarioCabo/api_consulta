@@ -1,8 +1,10 @@
 package romario.cabo.com.br.consulta_api.service.mapper.impl;
 
 import org.springframework.stereotype.Component;
+import romario.cabo.com.br.consulta_api.model.Profile;
 import romario.cabo.com.br.consulta_api.model.enums.ProfileEnum;
 import romario.cabo.com.br.consulta_api.repository.ProfileRepository;
+import romario.cabo.com.br.consulta_api.service.dto.ProfileDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 import romario.cabo.com.br.consulta_api.model.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
@@ -73,7 +75,7 @@ public class UserMapperImpl implements UserMapper {
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
-        userDto.setProfile(ProfileEnum.toEnum(profileRepository.findProfileCodeByIdUser(user.getId())));
+        userDto.setProfile(getProfile(user.getId()));
 
         return userDto;
     }
@@ -83,8 +85,19 @@ public class UserMapperImpl implements UserMapper {
         userDto.setId((Long) tuple.get(0));
         userDto.setName((String) tuple.get(1));
         userDto.setEmail((String) tuple.get(2));
-        userDto.setProfile(ProfileEnum.toEnum(profileRepository.findProfileCodeByIdUser((Long) tuple.get(0))));
+        userDto.setProfile(getProfile((Long) tuple.get(0)));
 
         return userDto;
+    }
+
+    private ProfileDto getProfile(Long idUser) {
+        Profile profile = profileRepository.findProfileByIdUser(idUser);
+
+        ProfileDto profileDto = new ProfileDto();
+        profileDto.setId(profile.getId());
+        profileDto.setCodProfile(profile.getProfileCode());
+        profileDto.setProfileType(ProfileEnum.toEnum(profile.getProfileCode()));
+
+        return profileDto;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
 import romario.cabo.com.br.consulta_api.service.impl.StateServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
@@ -19,7 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/v1/state")
-public class StateController {
+public class StateController extends ResponseHeaders<StateDto>  {
 
     private final StateServiceImpl stateServiceImpl;
 
@@ -72,7 +73,7 @@ public class StateController {
 
         Page<StateDto> statesPage = stateServiceImpl.findAll(filters, page, linesPerPage, sortBy);
 
-        return ResponseEntity.ok().headers(stateServiceImpl.responseHeaders(statesPage)).body(statesPage.getContent());
+        return ResponseEntity.ok().headers(responseHeaders(statesPage)).body(statesPage.getContent());
     }
 
     @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem")

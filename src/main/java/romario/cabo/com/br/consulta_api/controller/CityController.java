@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
 import romario.cabo.com.br.consulta_api.service.impl.CityServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
@@ -18,7 +19,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/v1/city")
-public class CityController {
+public class CityController extends ResponseHeaders<CityDto> {
 
     private final CityServiceImpl cityServiceImpl;
 
@@ -78,6 +79,6 @@ public class CityController {
 
         Page<CityDto> citiesPage = cityServiceImpl.findAll(filters, page, linesPerPage, sortBy);
 
-        return ResponseEntity.ok().headers(cityServiceImpl.responseHeaders(citiesPage)).body(citiesPage.getContent());
+        return ResponseEntity.ok().headers(responseHeaders(citiesPage)).body(citiesPage.getContent());
     }
 }

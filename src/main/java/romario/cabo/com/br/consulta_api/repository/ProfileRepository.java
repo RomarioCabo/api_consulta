@@ -10,6 +10,6 @@ import romario.cabo.com.br.consulta_api.model.Profile;
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
     @Transactional(readOnly = true)
-    @Query("SELECT profile.profileCode FROM Profile profile WHERE profile.user.id=:idUser")
-    int findProfileCodeByIdUser(Long idUser);
+    @Query("SELECT profile FROM Profile profile WHERE profile.user.id=:idUser")
+    Profile findProfileByIdUser(Long idUser);
 }

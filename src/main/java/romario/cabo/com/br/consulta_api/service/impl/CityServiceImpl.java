@@ -16,14 +16,13 @@ import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
 import romario.cabo.com.br.consulta_api.service.mapper.CityMapper;
 import romario.cabo.com.br.consulta_api.model.City;
-import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @Transactional
-public class CityServiceImpl extends ResponseHeaders<CityDto> implements ServiceInterface<CityDto, CityForm, CityFilter> {
+public class CityServiceImpl implements ServiceInterface<CityDto, CityForm, CityFilter> {
 
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
