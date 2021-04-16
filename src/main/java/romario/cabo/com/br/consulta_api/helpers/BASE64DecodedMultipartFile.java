@@ -1,4 +1,4 @@
-package romario.cabo.com.br.consulta_api.utils;
+package romario.cabo.com.br.consulta_api.helpers;
 
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;

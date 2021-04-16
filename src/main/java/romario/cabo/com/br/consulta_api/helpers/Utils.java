@@ -1,16 +1,9 @@
-package romario.cabo.com.br.consulta_api.utils;
+package romario.cabo.com.br.consulta_api.helpers;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import romario.cabo.com.br.consulta_api.service.dto.StateDto;
-
-import java.net.URI;
 
 import java.io.*;
 import java.nio.file.*;
@@ -19,11 +12,6 @@ import java.nio.file.*;
 public class Utils {
 
     private static final String folderImages = "state_photos/";
-
-    public static URI getUri(String fromHttpUrl, String queryParam, long id) {
-        return ServletUriComponentsBuilder.fromHttpUrl(fromHttpUrl).
-                queryParam(queryParam).buildAndExpand(id).toUri();
-    }
 
     public static void moveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);

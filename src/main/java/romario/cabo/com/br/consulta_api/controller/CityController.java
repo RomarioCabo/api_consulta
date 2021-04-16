@@ -6,20 +6,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
+import romario.cabo.com.br.consulta_api.helpers.ApiHelper;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
 import romario.cabo.com.br.consulta_api.service.impl.CityServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
-import romario.cabo.com.br.consulta_api.utils.Utils;
 
-import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/v1/city")
-public class CityController extends ResponseHeaders<CityDto> {
+public class CityController extends ApiHelper<CityDto> {
 
     private final CityServiceImpl cityServiceImpl;
 
@@ -42,14 +40,7 @@ public class CityController extends ResponseHeaders<CityDto> {
     public ResponseEntity<CityDto> saveCity(@RequestBody CityForm form) {
         CityDto cityDto = cityServiceImpl.save(form, null);
 
-        URI uri = Utils.getUri(
-                url + "api/v1/city",
-                "idCity={idCity}",
-                cityDto.getId()
-        );
-
-        return ResponseEntity.created(uri).body(cityDto);
-
+        return ResponseEntity.created(getUri(url + "api/v1/city", "idCity={idCity}", cityDto.getId())).body(cityDto);
     }
 
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar uma cidade", response = CityDto.class)

@@ -7,20 +7,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import romario.cabo.com.br.consulta_api.model.abstract_classes.ResponseHeaders;
+import romario.cabo.com.br.consulta_api.helpers.ApiHelper;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;
 import romario.cabo.com.br.consulta_api.service.impl.StateServiceImpl;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
-import romario.cabo.com.br.consulta_api.utils.Utils;
 
-import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/v1/state")
-public class StateController extends ResponseHeaders<StateDto>  {
+public class StateController extends ApiHelper<StateDto> {
 
     private final StateServiceImpl stateServiceImpl;
 
@@ -37,13 +35,7 @@ public class StateController extends ResponseHeaders<StateDto>  {
 
         StateDto stateDto = stateServiceImpl.save(form, null);
 
-        URI uri = Utils.getUri(
-                url + "api/v1/state",
-                "id={id}",
-                stateDto.getId()
-        );
-
-        return ResponseEntity.created(uri).body(stateDto);
+        return ResponseEntity.created(getUri(url + "api/v1/state", "id={id}", stateDto.getId())).body(stateDto);
     }
 
     @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um estado", response = StateDto.class)
