@@ -50,9 +50,10 @@ public class UserController extends ApiHelper<UserDto> {
 
     @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um usuário")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @DeleteMapping("/delete/{idUser}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long idUser) {
-        userServiceImpl.delete(idUser);
+    @DeleteMapping("/delete/{idUser}/{idProfile}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long idUser,
+                                           @PathVariable Long idProfile) {
+        userServiceImpl.delete(idUser, idProfile);
 
         return ResponseEntity.ok().build();
     }

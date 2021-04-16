@@ -23,7 +23,6 @@ import romario.cabo.com.br.consulta_api.helpers.Utils;
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -73,21 +72,20 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
     }
 
     @Override
-    public void delete(Long id) {
-        Optional<State> state = stateRepository.findById(id);
+    public void delete(Long... params) {
+        if(params.length >= 1 && params[0] != null) {
+            State state = stateRepository
+                    .findById(params[0]).orElseThrow(() -> new BadRequestException("Estado não localizado em nossa base de dados!"));
 
-        if (!state.isPresent()) {
-            throw new BadRequestException("Estado não localizado!");
-        }
+            try {
+                stateRepository.deleteById(params[0]);
+            } catch (Exception e) {
+                throw new InternalServerErrorException("Não foi possível excluir o registro!");
+            }
 
-        try {
-            stateRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new BadRequestException("Não foi possível excluir o registro!");
-        }
-
-        if (state.get().getImage() != null) {
-            deleteImageToDisk(id);
+            if (state.getImage() != null) {
+                deleteImageToDisk(params[0]);
+            }
         }
     }
 

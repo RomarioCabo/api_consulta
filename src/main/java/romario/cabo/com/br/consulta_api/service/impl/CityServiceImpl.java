@@ -71,12 +71,17 @@ public class CityServiceImpl implements ServiceInterface<CityDto, CityForm, City
     }
 
     @Override
-    public void delete(Long id) {
-        if (!cityRepository.existsById(id)) {
-            throw new BadRequestException("Cidade não localizado!");
-        }
+    public void delete(Long... params) {
+        if (params.length >= 1 && params[0] != null) {
+            cityRepository.findById(params[0])
+                    .orElseThrow(() -> new BadRequestException("Cidade não localizado em nossa base de dados!"));
 
-        cityRepository.deleteById(id);
+            try {
+                cityRepository.deleteById(params[0]);
+            } catch (Exception e) {
+                throw new InternalServerErrorException("Não foi possível excluir o registro!");
+            }
+        }
     }
 
     @Override

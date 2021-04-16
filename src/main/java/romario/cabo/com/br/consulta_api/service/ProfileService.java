@@ -32,6 +32,17 @@ public class ProfileService {
         }
     }
 
+    public void delete(Long idProfile) {
+        profileRepository.findById(idProfile)
+                .orElseThrow(() -> new BadRequestException("Perfil não localizado em nossa base de dados!"));
+
+        try {
+            profileRepository.deleteById(idProfile);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Não foi possível excluir! " + e.getMessage());
+        }
+    }
+
     private Profile getProfile(Long idProfile, User user, int codProfile) {
         Profile profile = new Profile();
         profile.setId(idProfile);

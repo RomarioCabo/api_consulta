@@ -90,12 +90,21 @@ public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, User
     }
 
     @Override
-    public void delete(Long id) {
-        if (!userRepository.existsById(id)) {
-            throw new BadRequestException("Usuário não encontrado!");
+    public void delete(Long... params) {
+        if (params.length >= 2 && params[1] != null) {
+            profileService.delete(params[1]);
         }
 
-        userRepository.deleteById(id);
+        if (params.length >= 1 && params[0] != null) {
+            userRepository.findById(params[0])
+                    .orElseThrow(() -> new BadRequestException("Usuário não localizado em nossa base de dados!"));
+
+            try {
+                userRepository.deleteById(params[0]);
+            } catch (Exception e) {
+                throw new InternalServerErrorException("Não foi possível excluir! " + e.getMessage());
+            }
+        }
     }
 
     @Override
