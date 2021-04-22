@@ -3,7 +3,7 @@ package romario.cabo.com.br.consulta_api.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import romario.cabo.com.br.consulta_api.model.enums.ProfileEnum;
+import romario.cabo.com.br.consulta_api.domain.enums.ProfileEnum;
 
 import java.util.Collection;
 import java.util.Set;

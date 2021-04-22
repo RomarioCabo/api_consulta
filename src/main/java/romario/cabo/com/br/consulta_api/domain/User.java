@@ -1,10 +1,10 @@
-package romario.cabo.com.br.consulta_api.model;
+package romario.cabo.com.br.consulta_api.domain;
 
 import lombok.Data;
-import romario.cabo.com.br.consulta_api.model.enums.ProfileEnum;
+import lombok.EqualsAndHashCode;
+import romario.cabo.com.br.consulta_api.domain.enums.ProfileEnum;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,13 +17,9 @@ import java.util.Set;
         uniqueConstraints = @UniqueConstraint(columnNames = "email")
 )
 @Data
-public class User implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class User extends AbstractEntity<Long> {
     private static final long serialVersionUID = 3490428625594717346L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario", unique = true, nullable = false)
-    private Long id;
 
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;

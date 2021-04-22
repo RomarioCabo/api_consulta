@@ -1,9 +1,9 @@
-package romario.cabo.com.br.consulta_api.model;
+package romario.cabo.com.br.consulta_api.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(
@@ -11,14 +11,10 @@ import java.io.Serializable;
         catalog = "consulta_bd"
 )
 @Data
-public class City implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class City extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = 9058667355574191710L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cidade", unique = true, nullable = false)
-    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_estado", nullable = false)

@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import romario.cabo.com.br.consulta_api.model.City;
-import romario.cabo.com.br.consulta_api.model.State;
+import romario.cabo.com.br.consulta_api.domain.City;
+import romario.cabo.com.br.consulta_api.domain.State;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

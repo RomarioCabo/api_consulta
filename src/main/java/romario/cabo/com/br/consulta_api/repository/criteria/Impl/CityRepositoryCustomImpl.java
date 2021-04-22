@@ -17,7 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import romario.cabo.com.br.consulta_api.model.City;
+import romario.cabo.com.br.consulta_api.domain.City;
 import romario.cabo.com.br.consulta_api.model.City_;
 import romario.cabo.com.br.consulta_api.model.State_;
 import romario.cabo.com.br.consulta_api.repository.criteria.CityRepositoryCustom;

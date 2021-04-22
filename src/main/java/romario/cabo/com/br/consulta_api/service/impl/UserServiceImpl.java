@@ -17,7 +17,7 @@ import romario.cabo.com.br.consulta_api.service.ServiceInterface;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
-import romario.cabo.com.br.consulta_api.model.User;
+import romario.cabo.com.br.consulta_api.domain.User;
 
 import javax.transaction.Transactional;
 

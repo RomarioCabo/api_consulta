@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import romario.cabo.com.br.consulta_api.model.State;
+import romario.cabo.com.br.consulta_api.domain.State;
 import romario.cabo.com.br.consulta_api.model.State_;
 import romario.cabo.com.br.consulta_api.repository.criteria.StateRepositoryCustom;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.StateFilter;

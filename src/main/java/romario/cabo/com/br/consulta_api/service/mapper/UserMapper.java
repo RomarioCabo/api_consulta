@@ -1,6 +1,6 @@
 package romario.cabo.com.br.consulta_api.service.mapper;
 
-import romario.cabo.com.br.consulta_api.model.User;
+import romario.cabo.com.br.consulta_api.domain.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
 

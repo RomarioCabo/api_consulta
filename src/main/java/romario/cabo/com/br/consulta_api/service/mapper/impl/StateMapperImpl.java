@@ -2,7 +2,7 @@ package romario.cabo.com.br.consulta_api.service.mapper.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import romario.cabo.com.br.consulta_api.model.State;
+import romario.cabo.com.br.consulta_api.domain.State;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
 import romario.cabo.com.br.consulta_api.service.mapper.StateMapper;

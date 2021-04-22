@@ -1,9 +1,9 @@
-package romario.cabo.com.br.consulta_api.model;
+package romario.cabo.com.br.consulta_api.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(
@@ -11,13 +11,9 @@ import java.io.Serializable;
         catalog = "consulta_bd"
 )
 @Data
-public class Profile implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class Profile extends AbstractEntity<Long> {
     private static final long serialVersionUID = -2924424353341713173L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_perfil", unique = true, nullable = false)
-    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)

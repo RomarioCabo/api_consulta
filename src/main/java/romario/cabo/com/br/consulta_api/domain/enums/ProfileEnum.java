@@ -1,4 +1,4 @@
-package romario.cabo.com.br.consulta_api.model.enums;
+package romario.cabo.com.br.consulta_api.domain.enums;
 
 public enum ProfileEnum {
 

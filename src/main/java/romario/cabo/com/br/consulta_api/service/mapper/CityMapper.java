@@ -1,6 +1,6 @@
 package romario.cabo.com.br.consulta_api.service.mapper;
 
-import romario.cabo.com.br.consulta_api.model.City;
+import romario.cabo.com.br.consulta_api.domain.City;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
 import romario.cabo.com.br.consulta_api.service.form.CityForm;
 

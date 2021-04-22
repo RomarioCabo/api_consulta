@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
-import romario.cabo.com.br.consulta_api.model.User;
+import romario.cabo.com.br.consulta_api.domain.User;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;

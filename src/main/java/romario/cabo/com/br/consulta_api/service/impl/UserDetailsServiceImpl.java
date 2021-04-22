@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import romario.cabo.com.br.consulta_api.model.User;
+import romario.cabo.com.br.consulta_api.domain.User;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
 import romario.cabo.com.br.consulta_api.security.UserSS;
 

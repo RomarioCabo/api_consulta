@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import romario.cabo.com.br.consulta_api.repository.criteria.CityRepositoryCustom;
-import romario.cabo.com.br.consulta_api.model.City;
+import romario.cabo.com.br.consulta_api.domain.City;
 
 @Repository
 public interface CityRepository extends JpaRepository<City, Long>, CityRepositoryCustom {

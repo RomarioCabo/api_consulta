@@ -3,8 +3,8 @@ package romario.cabo.com.br.consulta_api.service;
 import org.springframework.stereotype.Service;
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
-import romario.cabo.com.br.consulta_api.model.Profile;
-import romario.cabo.com.br.consulta_api.model.User;
+import romario.cabo.com.br.consulta_api.domain.Profile;
+import romario.cabo.com.br.consulta_api.domain.User;
 import romario.cabo.com.br.consulta_api.repository.ProfileRepository;
 
 import javax.transaction.Transactional;

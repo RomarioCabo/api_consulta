@@ -1,6 +1,6 @@
 package romario.cabo.com.br.consulta_api.service.mapper;
 
-import romario.cabo.com.br.consulta_api.model.State;
+import romario.cabo.com.br.consulta_api.domain.State;
 import romario.cabo.com.br.consulta_api.service.dto.StateDto;
 import romario.cabo.com.br.consulta_api.service.form.StateForm;
 

@@ -1,12 +1,12 @@
 package romario.cabo.com.br.consulta_api.service.mapper.impl;
 
 import org.springframework.stereotype.Component;
-import romario.cabo.com.br.consulta_api.model.Profile;
-import romario.cabo.com.br.consulta_api.model.enums.ProfileEnum;
+import romario.cabo.com.br.consulta_api.domain.Profile;
+import romario.cabo.com.br.consulta_api.domain.enums.ProfileEnum;
 import romario.cabo.com.br.consulta_api.repository.ProfileRepository;
 import romario.cabo.com.br.consulta_api.service.dto.ProfileDto;
 import romario.cabo.com.br.consulta_api.service.form.UserForm;
-import romario.cabo.com.br.consulta_api.model.User;
+import romario.cabo.com.br.consulta_api.domain.User;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
 import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
 
