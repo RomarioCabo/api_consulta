@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.stereotype.Service;
 
+import romario.cabo.com.br.consulta_api.domain.Profile;
 import romario.cabo.com.br.consulta_api.exception.BadRequestException;
 import romario.cabo.com.br.consulta_api.exception.InternalServerErrorException;
 import romario.cabo.com.br.consulta_api.repository.UserRepository;
@@ -20,6 +21,7 @@ import romario.cabo.com.br.consulta_api.service.mapper.UserMapper;
 import romario.cabo.com.br.consulta_api.domain.User;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -90,20 +92,20 @@ public class UserServiceImpl implements ServiceInterface<UserDto, UserForm, User
     }
 
     @Override
-    public void delete(Long... params) {
-        if (params.length >= 2 && params[1] != null) {
-            profileService.delete(params[1]);
+    public void delete(Long idUser) {
+        Profile profile = profileService.getProfileByIdUser(idUser);
+        profileService.delete(profile.getUser().getId());
+
+        Optional<User> userOptional = userRepository.findById(idUser);
+
+        if (!userOptional.isPresent()) {
+            throw new BadRequestException("Usuário não localizado em nossa base de dados!");
         }
 
-        if (params.length >= 1 && params[0] != null) {
-            userRepository.findById(params[0])
-                    .orElseThrow(() -> new BadRequestException("Usuário não localizado em nossa base de dados!"));
-
-            try {
-                userRepository.deleteById(params[0]);
-            } catch (Exception e) {
-                throw new InternalServerErrorException("Não foi possível excluir! " + e.getMessage());
-            }
+        try {
+            userRepository.deleteById(idUser);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Não foi possível excluir! " + e.getMessage());
         }
     }
 

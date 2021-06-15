@@ -72,21 +72,21 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
     }
 
     @Override
-    public void delete(Long... params) {
-        if(params.length >= 1 && params[0] != null) {
-            State state = stateRepository
-                    .findById(params[0]).orElseThrow(() -> new BadRequestException("Estado não localizado em nossa base de dados!"));
+    public void delete(Long idState) {
 
-            try {
-                stateRepository.deleteById(params[0]);
-            } catch (Exception e) {
-                throw new InternalServerErrorException("Não foi possível excluir o registro!");
-            }
+        State state = stateRepository
+                .findById(idState).orElseThrow(() -> new BadRequestException("Estado não localizado em nossa base de dados!"));
 
-            if (state.getImage() != null) {
-                deleteImageToDisk(params[0]);
-            }
+        try {
+            stateRepository.deleteById(idState);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Não foi possível excluir o registro!");
         }
+
+        if (state.getImage() != null) {
+            deleteImageToDisk(idState);
+        }
+
     }
 
     @Override
@@ -102,7 +102,9 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
 
             return statesPage;
         } catch (Exception e) {
-            throw new InternalServerErrorException("Não foi possível retornar os dados! \nError: " + e.getMessage());
+            e.printStackTrace();
+
+            throw new InternalServerErrorException("Não foi possível retornar os dados!");
         }
     }
 

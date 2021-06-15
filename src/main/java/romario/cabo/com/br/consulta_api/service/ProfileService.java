@@ -8,6 +8,7 @@ import romario.cabo.com.br.consulta_api.domain.User;
 import romario.cabo.com.br.consulta_api.repository.ProfileRepository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,14 +34,21 @@ public class ProfileService {
     }
 
     public void delete(Long idProfile) {
-        profileRepository.findById(idProfile)
-                .orElseThrow(() -> new BadRequestException("Perfil não localizado em nossa base de dados!"));
+        Optional<Profile> profileOptional = profileRepository.findById(idProfile);
+
+        if(!profileOptional.isPresent()) {
+            throw new BadRequestException("Perfil não localizado em nossa base de dados!");
+        }
 
         try {
             profileRepository.deleteById(idProfile);
         } catch (Exception e) {
             throw new InternalServerErrorException("Não foi possível excluir! " + e.getMessage());
         }
+    }
+
+    public Profile getProfileByIdUser(Long idUSer) {
+        return profileRepository.findProfileByIdUser(idUSer);
     }
 
     private Profile getProfile(Long idProfile, User user, int codProfile) {

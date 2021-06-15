@@ -37,7 +37,7 @@ public class UserServiceTest {
      * Deve salvar um usuário
      */
     @Test
-    public void mustSaveUser() {
+    void mustSaveUser() {
         // cenário
         Mockito.when(repository.existsByEmail(Mockito.anyString())).thenReturn(false);
 
@@ -58,7 +58,7 @@ public class UserServiceTest {
      * Não deve salvar um usuário com o email já registardo
      */
     @Test
-    public void shouldNotSaveUserWithEmailAlreadyRegistered() {
+    void shouldNotSaveUserWithEmailAlreadyRegistered() {
         //cenario
         String email = "romariocabo2012@gmail.com";
         User user = toUser(getUserForm());
@@ -76,7 +76,7 @@ public class UserServiceTest {
      * deve lançar uma exceção ao tentar salvar um usuário com o email já cadastrado
      */
     @Test
-    public void shouldThrowExceptionWhenTryingSaveUserWithEmailAlreadyRegistered() {
+    void shouldThrowExceptionWhenTryingSaveUserWithEmailAlreadyRegistered() {
         //cenário
         Mockito.when(repository.existsByEmail(Mockito.anyString())).thenReturn(true);
 
@@ -93,7 +93,7 @@ public class UserServiceTest {
      * deve lançar uma exceção quando tentar salvar na base de dados
      */
     @Test
-    public void shouldThrowExceptionWhenTryingSaveDatabase() {
+    void shouldThrowExceptionWhenTryingSaveDatabase() {
         //cenário
         Mockito.doThrow(new InternalServerErrorException("Não foi possível salvar!")).when(service).save(getUserForm(), null);
 
@@ -110,7 +110,7 @@ public class UserServiceTest {
      * deve lançar uma exceção ao tentar converter de entidade para dto
      */
     @Test
-    public void shouldThrowExceptionWhenTryingEntityToDto() {
+    void shouldThrowExceptionWhenTryingEntityToDto() {
         //cenário
         Mockito.doThrow(new InternalServerErrorException("Não foi possível realizar o Mapper para DTO!")).when(userMapper).toDto(getUser());
 

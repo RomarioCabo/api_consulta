@@ -8,7 +8,7 @@ public interface ServiceInterface<DTO, FORM, FILTER> {
 
     DTO save(FORM object, Long id);
 
-    void delete(Long... params);
+    void delete(Long id);
 
     Page<DTO> findAll(FILTER filter, Integer page, Integer linesPerPage, String sortBy);
 

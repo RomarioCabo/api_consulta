@@ -18,8 +18,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import romario.cabo.com.br.consulta_api.domain.City;
-import romario.cabo.com.br.consulta_api.model.City_;
-import romario.cabo.com.br.consulta_api.model.State_;
+import romario.cabo.com.br.consulta_api.domain.City_;
+import romario.cabo.com.br.consulta_api.domain.State_;
 import romario.cabo.com.br.consulta_api.repository.criteria.CityRepositoryCustom;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.CityFilter;
 import romario.cabo.com.br.consulta_api.service.dto.CityDto;
@@ -91,6 +91,7 @@ public class CityRepositoryCustomImpl implements CityRepositoryCustom {
         if (City_.NAME.equals(sortBy[0])) {
             return City_.NAME;
         }
+
         return City_.ID;
     }
 }

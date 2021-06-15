@@ -52,7 +52,7 @@ public class CityServiceImpl implements ServiceInterface<CityDto, CityForm, City
     @Override
     public CityDto save(CityForm cityForm, Long id) {
         if (existsCity(cityForm.getName(), cityForm.getIdState())) {
-            throw new BadRequestException("Cidade ja cadastrada!");
+            throw new BadRequestException("Cidade já cadastrada, para o estado informado!");
         }
 
         City city;
@@ -71,17 +71,17 @@ public class CityServiceImpl implements ServiceInterface<CityDto, CityForm, City
     }
 
     @Override
-    public void delete(Long... params) {
-        if (params.length >= 1 && params[0] != null) {
-            cityRepository.findById(params[0])
-                    .orElseThrow(() -> new BadRequestException("Cidade não localizado em nossa base de dados!"));
+    public void delete(Long idCity) {
 
-            try {
-                cityRepository.deleteById(params[0]);
-            } catch (Exception e) {
-                throw new InternalServerErrorException("Não foi possível excluir o registro!");
-            }
+        cityRepository.findById(idCity)
+                .orElseThrow(() -> new BadRequestException("Cidade não localizado em nossa base de dados!"));
+
+        try {
+            cityRepository.deleteById(idCity);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Não foi possível excluir o registro!");
         }
+
     }
 
     @Override

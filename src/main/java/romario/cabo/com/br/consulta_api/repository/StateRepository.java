@@ -15,5 +15,4 @@ public interface StateRepository extends JpaRepository<State, Long>, StateReposi
 
     @Transactional
     boolean existsById(Long id);
-
 }

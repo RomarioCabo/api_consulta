@@ -16,9 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-
 import romario.cabo.com.br.consulta_api.domain.User;
-import romario.cabo.com.br.consulta_api.model.User_;
+import romario.cabo.com.br.consulta_api.domain.User_;
 import romario.cabo.com.br.consulta_api.repository.criteria.UserRepositoryCustom;
 import romario.cabo.com.br.consulta_api.repository.criteria.filter.UserFilter;
 import romario.cabo.com.br.consulta_api.service.dto.UserDto;
