@@ -49,61 +49,29 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
   public StateDto save(String jsonObject, Long id, MultipartFile imageFile) {
     StateForm form = stringToObject(jsonObject);
 
-    if (id == null) {
-      if (stateRepository.existsByAcronymAndName(form.getAcronym(), form.getName())) {
-        throw new BadRequestException("Estado ja cadastrado!");
-      }
-    }
+    stateExists(id, form);
 
-    Optional<State> stateOptional = Optional.empty();
-
-    if (id != null) {
-      stateOptional = stateRepository.findById(id);
-
-      if (!stateOptional.isPresent()) {
-        throw new BadRequestException("Estado informado não encotrado!");
-      }
-    }
+    State stateOptional = stateExists(id);
 
     State state;
 
-    String fileName = imageFile != null && !imageFile.isEmpty() ? getFileName(imageFile)
-        : stateOptional.get().getImage();
+    String fileName = getFileName(imageFile, stateOptional.getImage());
 
-    try {
-      state = stateRepository.save(getState(form, id, fileName));
-    } catch (Exception e) {
-      throw new BadRequestException("Não foi possível salvar!");
-    }
+    state = saveState(id, form, fileName);
 
-    if (imageFile != null && !imageFile.isEmpty()) {
-      saveImageToDisk(imageFile, state, fileName);
-    }
+    saveImageToDisk(imageFile, state, fileName);
 
-    try {
-      return stateMapper.toDto(state);
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw new BadRequestException("Não foi possível realizar o Mapper para DTO!");
-    }
+    return mapperState(state);
   }
 
   @Override
   public void delete(Long idState) {
 
-    State state = stateRepository
-        .findById(idState).orElseThrow(
-            () -> new BadRequestException("Estado não localizado em nossa base de dados!"));
+    State state = stateExists(idState, "Estado não localizado em nossa base de dados!");
 
-    try {
-      stateRepository.deleteById(idState);
-    } catch (Exception e) {
-      throw new InternalServerErrorException("Não foi possível excluir o registro!");
-    }
+    deleteState(idState);
 
-    if (state.getImage() != null) {
-      deleteImageToDisk(idState);
-    }
+    deleteImageToDisk(idState, state.getImage());
 
   }
 
@@ -128,10 +96,86 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
   }
 
   public byte[] getImage(Long id) {
-    State state = stateRepository.findById(id)
-        .orElseThrow(() -> new BadRequestException("ID informado não encontrado"));
+    State state = stateExists(id, "ID informado não encontrado");
 
     return Utils.getImageWithMediaType(state.getId(), state.getImage());
+  }
+
+  private void saveImageToDisk(MultipartFile file, State state, String fileName) {
+    try {
+      if (file != null && !file.isEmpty()) {
+        String uploadDir = folderImages + state.getId();
+        Utils.moveFile(uploadDir, fileName, file);
+      }
+    } catch (Exception e) {
+      throw new BadRequestException("Não foi possível salvar a imagem no disco!");
+    }
+  }
+
+  private void deleteImageToDisk(Long id, String image) {
+    try {
+      if (image != null) {
+        String uploadDir = folderImages + id;
+        Utils.deleteFile(uploadDir);
+      }
+    } catch (Exception e) {
+      throw new BadRequestException("Não foi possível deletar a imagem do disco!");
+    }
+  }
+
+  private String getFileName(MultipartFile file, String imageName) {
+    if (file != null && !file.isEmpty()) {
+      String rawString = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+
+      byte[] bytes = rawString.getBytes(StandardCharsets.UTF_8);
+
+      return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    return imageName;
+  }
+
+  private StateForm stringToObject(String objectJson) {
+    try {
+      ObjectMapper objectMapper = new ObjectMapper();
+      return objectMapper.readValue(objectJson, StateForm.class);
+    } catch (Exception e) {
+      throw new BadRequestException("Não foi possível converter a string em um objeto!");
+    }
+  }
+
+  private State stateExists(Long id) {
+    Optional<State> stateOptional = Optional.empty();
+
+    if (id != null) {
+      stateOptional = stateRepository.findById(id);
+
+      if (!stateOptional.isPresent()) {
+        throw new BadRequestException("Estado informado não encotrado!");
+      }
+    }
+
+    return stateOptional.get();
+  }
+
+  private void stateExists(Long id, StateForm form) {
+    if (id == null) {
+      if (stateRepository.existsByAcronymAndName(form.getAcronym(), form.getName())) {
+        throw new BadRequestException("Estado ja cadastrado!");
+      }
+    }
+  }
+
+  private State saveState(Long id, StateForm form, String fileName) {
+    State state;
+
+    try {
+      state = stateRepository.save(getState(form, id, fileName));
+    } catch (Exception e) {
+      throw new BadRequestException("Não foi possível salvar!");
+    }
+
+    return state;
   }
 
   private State getState(StateForm form, Long id, String image) {
@@ -151,42 +195,25 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
     }
   }
 
-  private void saveImageToDisk(MultipartFile file, State state, String fileName) {
+  private StateDto mapperState(State state) {
     try {
-      String uploadDir = folderImages + state.getId();
-      Utils.moveFile(uploadDir, fileName, file);
+      return stateMapper.toDto(state);
     } catch (Exception e) {
-      throw new BadRequestException("Não foi possível salvar a imagem no disco!");
+      throw new BadRequestException("Não foi possível realizar o Mapper para DTO!");
     }
   }
 
-  private void deleteImageToDisk(Long id) {
-    try {
-      String uploadDir = folderImages + id;
-      Utils.deleteFile(uploadDir);
-    } catch (Exception e) {
-      throw new BadRequestException("Não foi possível deletar a imagem do disco!");
-    }
+  private State stateExists(Long idState, String messageError) {
+    return stateRepository
+        .findById(idState).orElseThrow(
+            () -> new BadRequestException(messageError));
   }
 
-  private String getFileName(MultipartFile file) {
-    if (file == null) {
-      return null;
-    } else {
-      String rawString = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-
-      byte[] bytes = rawString.getBytes(StandardCharsets.UTF_8);
-
-      return new String(bytes, StandardCharsets.UTF_8);
-    }
-  }
-
-  private StateForm stringToObject(String objectJson) {
+  private void deleteState(Long idState) {
     try {
-      ObjectMapper objectMapper = new ObjectMapper();
-      return objectMapper.readValue(objectJson, StateForm.class);
+      stateRepository.deleteById(idState);
     } catch (Exception e) {
-      throw new BadRequestException("Não foi possível converter a string em um objeto!");
+      throw new InternalServerErrorException("Não foi possível excluir o registro!");
     }
   }
 }
