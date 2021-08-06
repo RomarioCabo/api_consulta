@@ -1,5 +1,6 @@
 package romario.cabo.com.br.consulta_api.service.mapper.impl;
 
+import java.text.NumberFormat;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import romario.cabo.com.br.consulta_api.domain.State;
@@ -81,7 +82,7 @@ public class StateMapperImpl implements StateMapper {
         state.setDemographicDensity(dto.getDemographicDensity());
         state.setIdh(dto.getIdh());
         state.setBorderingTerritory(dto.getBorderingTerritory());
-        state.setPib(dto.getPib());
+        state.setPib(Double.parseDouble(dto.getPib()));
         state.setNaturalAspects(dto.getNaturalAspects());
         state.setEconomicActivities(dto.getEconomicActivities());
         state.setCuriosity(dto.getCuriosity());
@@ -127,7 +128,7 @@ public class StateMapperImpl implements StateMapper {
         stateDto.setDemographicDensity(state.getDemographicDensity());
         stateDto.setIdh(state.getIdh());
         stateDto.setBorderingTerritory(state.getBorderingTerritory());
-        stateDto.setPib(state.getPib());
+        stateDto.setPib(NumberFormat.getCurrencyInstance().format(state.getPib()));
         stateDto.setNaturalAspects(state.getNaturalAspects());
         stateDto.setEconomicActivities(state.getEconomicActivities());
         stateDto.setCuriosity(state.getCuriosity());
@@ -151,7 +152,7 @@ public class StateMapperImpl implements StateMapper {
         stateDto.setDemographicDensity((double) tuple.get(9));
         stateDto.setIdh((double) tuple.get(10));
         stateDto.setBorderingTerritory((String) tuple.get(11));
-        stateDto.setPib((double) tuple.get(12));
+        stateDto.setPib(NumberFormat.getCurrencyInstance().format(tuple.get(12)));
         stateDto.setNaturalAspects((String) tuple.get(13));
         stateDto.setEconomicActivities((String) tuple.get(14));
         stateDto.setCuriosity((String) tuple.get(15));

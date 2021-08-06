@@ -2,8 +2,6 @@
   {
     "name": "Acre",
     "acronym": "AC",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/1",
-    "imageName": "1616348026390.png",
     "capital": "Rio Branco",
     "gentle": "Acreano",
     "territorialArea": 164123738,
@@ -19,11 +17,8 @@
     "region": "Norte"
   },
   {
-    "id": 2,
     "name": "Alagoas",
     "acronym": "AL",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/2",
-    "imageName": "1616348134531.png",
     "capital": "Maceió",
     "gentle": "Alagoano",
     "territorialArea": 27848,
@@ -39,11 +34,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 4,
     "name": "Amapá",
     "acronym": "AP",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/4",
-    "imageName": "1616348315201.png",
     "capital": "Macapá",
     "gentle": "Amapaense",
     "territorialArea": 142470462,
@@ -59,11 +51,8 @@
     "region": "Norte"
   },
   {
-    "id": 3,
     "name": "Amazonas",
     "acronym": "AM",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/3",
-    "imageName": "1616348258487.png",
     "capital": "Manaus",
     "gentle": "Amazonense",
     "territorialArea": 1559168117,
@@ -79,11 +68,8 @@
     "region": "Norte"
   },
   {
-    "id": 5,
     "name": "Bahia",
     "acronym": "BA",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/5",
-    "imageName": "1616348395880.png",
     "capital": "Salvador",
     "gentle": "Baiano",
     "territorialArea": 564733,
@@ -99,11 +85,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 6,
     "name": "Ceará",
     "acronym": "CE",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/6",
-    "imageName": "1616348494532.png",
     "capital": "Fortaleza",
     "gentle": "Cearense",
     "territorialArea": 149894,
@@ -119,11 +102,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 7,
     "name": "Distrito Federal",
     "acronym": "DF",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/7",
-    "imageName": "1616348797681.png",
     "capital": "Brasília",
     "gentle": "Brasiliense",
     "territorialArea": 5779,
@@ -139,11 +119,8 @@
     "region": "Centro-Oeste"
   },
   {
-    "id": 8,
     "name": "Espírito Santo",
     "acronym": "ES",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/8",
-    "imageName": "1616348873029.png",
     "capital": "Vitória",
     "gentle": "Espírito-santense ou capixaba",
     "territorialArea": 46095,
@@ -159,11 +136,8 @@
     "region": "Sudeste"
   },
   {
-    "id": 9,
     "name": "Goiás",
     "acronym": "GO",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/9",
-    "imageName": "1616348937527.png",
     "capital": "Goiânia",
     "gentle": "Goiano",
     "territorialArea": 340111,
@@ -179,11 +153,8 @@
     "region": "Centro-Oeste"
   },
   {
-    "id": 10,
     "name": "Maranhão",
     "acronym": "MA",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/10",
-    "imageName": "1616352650223.png",
     "capital": "São Luís",
     "gentle": "Maranhense",
     "territorialArea": 329642,
@@ -199,11 +170,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 13,
     "name": "Mato Grosso",
     "acronym": "MT",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/13",
-    "imageName": "1616352839265.png",
     "capital": "Cuiabá",
     "gentle": "Mato-grossense",
     "territorialArea": 903378,
@@ -219,11 +187,8 @@
     "region": "Centro-Oeste"
   },
   {
-    "id": 12,
     "name": "Mato Grosso do Sul",
     "acronym": "MS",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/12",
-    "imageName": "1616352809395.png",
     "capital": "Campo Grande",
     "gentle": "Sul-mato-grossense ou mato-grossense-do-sul",
     "territorialArea": 357145,
@@ -239,11 +204,8 @@
     "region": "Centro-Oeste"
   },
   {
-    "id": 11,
     "name": "Minas Gerais",
     "acronym": "MG",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/11",
-    "imageName": "1616352701057.png",
     "capital": "Belo Horizonte",
     "gentle": "Mineiro",
     "territorialArea": 586522,
@@ -259,11 +221,8 @@
     "region": "Sudeste"
   },
   {
-    "id": 14,
     "name": "Pará",
     "acronym": "PA",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/14",
-    "imageName": "1616352911341.png",
     "capital": "Belém",
     "gentle": "Paraense",
     "territorialArea": 1245459,
@@ -279,11 +238,8 @@
     "region": "Norte"
   },
   {
-    "id": 15,
     "name": "Paraíba",
     "acronym": "PB",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/15",
-    "imageName": "1616352955985.png",
     "capital": "João Pessoa",
     "gentle": "Paraibano",
     "territorialArea": 56469,
@@ -299,11 +255,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 18,
     "name": "Paraná",
     "acronym": "PR",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/18",
-    "imageName": "1616353098710.png",
     "capital": "Curitiba",
     "gentle": "Paranaense",
     "territorialArea": 199307,
@@ -319,11 +272,8 @@
     "region": "Sul"
   },
   {
-    "id": 16,
     "name": "Pernambuco",
     "acronym": "PE",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/16",
-    "imageName": "1616353003328.png",
     "capital": "Recife",
     "gentle": "Pernambucano",
     "territorialArea": 98149,
@@ -339,11 +289,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 17,
     "name": "Piauí",
     "acronym": "PI",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/17",
-    "imageName": "1616353074233.png",
     "capital": "Teresina",
     "gentle": "Piauiense",
     "territorialArea": 251577,
@@ -359,11 +306,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 19,
     "name": "Rio de Janeiro",
     "acronym": "RJ",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/19",
-    "imageName": "1616353137390.png",
     "capital": "Rio de Janeiro",
     "gentle": "Fluminense, Carioca",
     "territorialArea": 43780,
@@ -379,11 +323,8 @@
     "region": "Sudeste"
   },
   {
-    "id": 20,
     "name": "Rio Grande do Norte",
     "acronym": "RN",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/20",
-    "imageName": "1616353181144.png",
     "capital": "Natal",
     "gentle": "Norte-rio-grandense, rio-grandense-do-norte e potiguar",
     "territorialArea": 52809,
@@ -399,11 +340,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 23,
     "name": "Rio Grande do Sul",
     "acronym": "RS",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/23",
-    "imageName": "1616353317376.png",
     "capital": "Porto Alegre",
     "gentle": "Gaúcho ou sul-rio-grandense",
     "territorialArea": 281730,
@@ -419,11 +357,8 @@
     "region": "Sul"
   },
   {
-    "id": 21,
     "name": "Rondônia",
     "acronym": "RO",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/21",
-    "imageName": "1616353240636.png",
     "capital": "Porto Velho",
     "gentle": "Rondoniense",
     "territorialArea": 237590543,
@@ -439,11 +374,8 @@
     "region": "Norte"
   },
   {
-    "id": 22,
     "name": "Roraima",
     "acronym": "RR",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/22",
-    "imageName": "1616353278928.png",
     "capital": "Boa Vista",
     "gentle": "Roraimense",
     "territorialArea": 224273,
@@ -459,11 +391,8 @@
     "region": "Norte"
   },
   {
-    "id": 24,
     "name": "Santa Catarina",
     "acronym": "SC",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/24",
-    "imageName": "1616353374352.png",
     "capital": "Florianópolis",
     "gentle": "Catarinense",
     "territorialArea": 95736,
@@ -479,11 +408,8 @@
     "region": "Sul"
   },
   {
-    "id": 26,
     "name": "São Paulo",
     "acronym": "SP",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/26",
-    "imageName": "1616353461154.png",
     "capital": "São Paulo",
     "gentle": "Paulista",
     "territorialArea": 248222,
@@ -499,11 +425,8 @@
     "region": "Sudeste"
   },
   {
-    "id": 25,
     "name": "Sergipe",
     "acronym": "SE",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/25",
-    "imageName": "1616353413337.png",
     "capital": "Aracaju",
     "gentle": "Sergipano ou sergipense",
     "territorialArea": 21915,
@@ -519,11 +442,8 @@
     "region": "Nordeste"
   },
   {
-    "id": 27,
     "name": "Tocantins",
     "acronym": "TO",
-    "urlImage": "http://192.168.1.10:3400/api/v1/state/getImage/27",
-    "imageName": "1616353494615.png",
     "capital": "Palmas",
     "gentle": "Tocantinense",
     "territorialArea": 277720,

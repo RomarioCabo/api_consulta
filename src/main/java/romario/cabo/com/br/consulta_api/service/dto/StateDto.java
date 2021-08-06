@@ -21,7 +21,7 @@ public class StateDto implements Serializable {
     private double demographicDensity;
     private double idh;
     private String borderingTerritory;
-    private double pib;
+    private String pib;
     private String naturalAspects;
     private String economicActivities;
     private String curiosity;
