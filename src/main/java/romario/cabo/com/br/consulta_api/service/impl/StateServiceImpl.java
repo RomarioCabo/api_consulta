@@ -83,14 +83,12 @@ public class StateServiceImpl implements ServiceInterface<StateDto, StateForm, S
 
       Page<StateDto> statesPage = stateRepository.filterState(filter, pageable);
 
-      if (statesPage.isEmpty()) {
+      if (statesPage == null || statesPage.isEmpty()) {
         return null;
       }
 
       return statesPage;
     } catch (Exception e) {
-      e.printStackTrace();
-
       throw new InternalServerErrorException("Não foi possível retornar os dados!");
     }
   }

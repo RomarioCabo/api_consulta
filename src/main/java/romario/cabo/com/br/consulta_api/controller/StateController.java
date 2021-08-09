@@ -1,6 +1,7 @@
 package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.ApiOperation;
+import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -68,7 +69,10 @@ public class StateController extends ApiHelper<StateDto> {
 
     Page<StateDto> statesPage = stateServiceImpl.findAll(filters, page, linesPerPage, sortBy);
 
-    return ResponseEntity.ok().headers(responseHeaders(statesPage)).body(statesPage.getContent());
+    List<StateDto> emptyArray = new ArrayList<>();
+
+    return ResponseEntity.ok().headers(responseHeaders(statesPage))
+        .body(statesPage == null ? emptyArray : statesPage.getContent());
   }
 
   @ApiOperation(httpMethod = "GET", value = "EndPoint para obter a imagem")

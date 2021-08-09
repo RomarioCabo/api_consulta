@@ -14,7 +14,6 @@ import romario.cabo.com.br.consulta_api.service.form.AuthenticateForm;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest req,
                                             HttpServletResponse res,
                                             FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
+                                            Authentication auth) throws IOException {
         String email = ((UserSS) auth.getPrincipal()).getEmail();
         String token = jwtUtil.generateToken(email);
         res.addHeader("Authorization", "Bearer " + token);
@@ -60,7 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserSS user = (UserSS) auth.getPrincipal();
 
         PrintWriter out = res.getWriter();
-        res.setContentType("application/json");
+        res.setContentType("application/json;charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
         out.print(userJson(user));
         out.flush();
@@ -70,7 +69,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         @Override
         public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
-                throws IOException, ServletException {
+                throws IOException {
             response.setStatus(401);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

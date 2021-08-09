@@ -1,6 +1,8 @@
 package romario.cabo.com.br.consulta_api.controller;
 
 import io.swagger.annotations.ApiOperation;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,52 +22,59 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/user")
 public class UserController extends ApiHelper<UserDto> {
 
-    private final UserServiceImpl userServiceImpl;
+  private final UserServiceImpl userServiceImpl;
 
-    @Value("${application.url}")
-    private String url;
+  @Value("${application.url}")
+  private String url;
 
-    public UserController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-    }
+  public UserController(UserServiceImpl userServiceImpl) {
+    this.userServiceImpl = userServiceImpl;
+  }
 
-    @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um usuário", response = UserDto.class)
-    @PostMapping("/save")
-    public ResponseEntity<UserDto> saveUser(@RequestBody UserForm form) {
+  @ApiOperation(httpMethod = "POST", value = "EndPoint para salvar um usuário", response = UserDto.class)
+  @PreAuthorize("hasAnyRole('ADMIN')")
+  @PostMapping("/save")
+  public ResponseEntity<UserDto> saveUser(@RequestBody UserForm form) {
 
-        UserDto userDto = (userServiceImpl.save(form, null));
+    UserDto userDto = (userServiceImpl.save(form, null));
 
-        return ResponseEntity.created(getUri(url + "api/v1/user", "id={id}", userDto.getId())).body(userDto);
-    }
+    return ResponseEntity.created(getUri(url + "api/v1/user", "id={id}", userDto.getId()))
+        .body(userDto);
+  }
 
-    @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um usuário", response = UserDto.class)
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @PutMapping("/update/{idUser}/{idProfile}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long idUser,
-                                              @PathVariable Long idProfile,
-                                              @RequestBody UserForm form) {
+  @ApiOperation(httpMethod = "PUT", value = "EndPoint para alterar um usuário", response = UserDto.class)
+  @PreAuthorize("hasAnyRole('ADMIN')")
+  @PutMapping("/update/{idUser}/{idProfile}")
+  public ResponseEntity<UserDto> updateUser(@PathVariable Long idUser,
+      @PathVariable Long idProfile,
+      @RequestBody UserForm form) {
 
-        return ResponseEntity.ok(userServiceImpl.update(form, idUser, idProfile));
-    }
+    return ResponseEntity.ok(userServiceImpl.update(form, idUser, idProfile));
+  }
 
-    @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um usuário")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @DeleteMapping("/delete/{idUser}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long idUser) {
-        userServiceImpl.delete(idUser);
+  @ApiOperation(httpMethod = "DELETE", value = "EndPoint para deletar um usuário")
+  @PreAuthorize("hasAnyRole('ADMIN')")
+  @DeleteMapping("/delete/{idUser}")
+  public ResponseEntity<Void> deleteUser(@PathVariable Long idUser) {
+    userServiceImpl.delete(idUser);
 
-        return ResponseEntity.ok().build();
-    }
+    return ResponseEntity.ok().build();
+  }
 
-    @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os usuários de acordo com os parêmtros informados", response = UserDto[].class)
-    @GetMapping
-    public ResponseEntity<List<UserDto>> findUsers(@ModelAttribute UserFilter filters,
-                                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                   @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-                                                   @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
+  @ApiOperation(httpMethod = "GET", value = "EndPoint que retorna todas os usuários de acordo com os parêmtros informados", response = UserDto[].class)
+  @PreAuthorize("hasAnyRole('ADMIN')")
+  @GetMapping
+  public ResponseEntity<List<UserDto>> findUsers(@ModelAttribute UserFilter filters,
+      @RequestParam(value = "page", defaultValue = "0") Integer page,
+      @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+      @RequestParam(value = "sortBy", defaultValue = "name") String sortBy) {
 
-        Page<UserDto> usersPage = userServiceImpl.findAll(filters, page, linesPerPage, sortBy);
+    Page<UserDto> usersPage = userServiceImpl.findAll(filters, page, linesPerPage, sortBy);
 
-        return ResponseEntity.ok().headers(responseHeaders(usersPage)).body(usersPage.getContent());
-    }
+    List<UserDto> emptyArray = new ArrayList<>();
+
+    return ResponseEntity.ok().headers(responseHeaders(usersPage))
+        .body(usersPage == null ? emptyArray : usersPage.getContent().stream()
+            .filter(obj -> obj.getId() != 1).collect(Collectors.toList()));
+  }
 }

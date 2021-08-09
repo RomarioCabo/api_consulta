@@ -8,24 +8,21 @@ import java.net.URI;
 
 public abstract class ApiHelper<DTO> {
 
-    public HttpHeaders responseHeaders(Page<DTO> listPages) {
-        if (listPages.isEmpty()) {
-            return null;
-        }
+  public HttpHeaders responseHeaders(Page<DTO> listPages) {
+    int totalPages = listPages == null ? 0 : listPages.getTotalPages();
+    long totalElements = listPages == null ? 0L : listPages.getTotalElements();
 
-        int totalPages = listPages.getTotalPages();
+    HttpHeaders responseHeaders = new HttpHeaders();
+    responseHeaders.set("totalPages", Integer.toString(totalPages));
+    responseHeaders.set("access-control-expose-headers", "totalPages");
+    responseHeaders.set("totalElements", Long.toString(totalElements));
+    responseHeaders.set("access-control-expose-headers", "totalElements");
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("totalPages", Integer.toString(totalPages));
-        responseHeaders.set("access-control-expose-headers", "totalPages");
-        responseHeaders.set("totalElements", Long.toString(listPages.getTotalElements()));
-        responseHeaders.set("access-control-expose-headers", "totalElements");
+    return responseHeaders;
+  }
 
-        return responseHeaders;
-    }
-
-    public URI getUri(String fromHttpUrl, String queryParam, long id) {
-        return ServletUriComponentsBuilder.fromHttpUrl(fromHttpUrl).
-                queryParam(queryParam).buildAndExpand(id).toUri();
-    }
+  public URI getUri(String fromHttpUrl, String queryParam, long id) {
+    return ServletUriComponentsBuilder.fromHttpUrl(fromHttpUrl).
+        queryParam(queryParam).buildAndExpand(id).toUri();
+  }
 }
